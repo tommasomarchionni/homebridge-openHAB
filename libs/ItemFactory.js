@@ -31,7 +31,7 @@ ItemFactory.prototype.parseSitemap = function (jsonSitemap) {
         }
 
         if ("SwitchItem" === widget.item.type){
-            var accessory = SwicthItem(widget,this.platform,this.homebridge);
+            var accessory = new SwitchItem(widget,this.platform,this.homebridge);
         } else {
             this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
             continue;
