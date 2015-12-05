@@ -1,6 +1,6 @@
 {
   "name": "homebridge-openhab",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Homebridge plugin for openHAB",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "Siri"
   ],
   "dependencies": {
+    "ws": "^0.8.1",
     "request": "^2.65.0"
   },
   "author": "tommasomarchionni",

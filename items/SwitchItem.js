@@ -1,7 +1,7 @@
 "use strict";
 
-var SwitchItem = function(widget,platform) {
-    SwitchItem.super_.call(this, widget,platform);
+var SwitchItem = function(widget,platform,homebridge) {
+    SwitchItem.super_.call(this, widget,platform,homebridge);
 };
 
 SwitchItem.prototype.getServices = function() {
@@ -10,7 +10,7 @@ SwitchItem.prototype.getServices = function() {
     this.setInitialState = true;
     this.informationService = this.getInformationServices();
 
-    this.otherService = new Service.Lightbulb();
+    this.otherService = new this.homebridge.hap.Service.Lightbulb();
     this.otherService.getCharacteristic(Characteristic.On)
         .on('set', this.setItem.bind(this))
         .on('get', this.getItemPowerState.bind(this))

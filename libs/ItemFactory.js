@@ -1,9 +1,11 @@
 "use strict";
+var currentModule = this;
+var SwitchItem = require('../items/SwitchItem');
 
-var ItemFactory = function(OpenHABPlatform,currentModule) {
+var ItemFactory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
     this.log = this.platform.log;
-    this.currentModule = currentModule;
+    this.homebridge = homebridge;
 };
 
 ItemFactory.prototype.sitemapUrl = function () {
@@ -28,12 +30,15 @@ ItemFactory.prototype.parseSitemap = function (jsonSitemap) {
             continue;
         }
 
-        if (this.currentModule[widget.item.type] != undefined) {
-            var accessory = new this.currentModule[widget.item.type](widget,this.platform);
+        if ("SwitchItem" === widget.item.type){
+            var accessory = SwicthItem(widget,this.platform,this.homebridge);
         } else {
             this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
             continue;
         }
+        //if (currentModule[widget.item.type] != undefined) {
+        //    var accessory = new currentModule[widget.item.type](widget,this.platform);
+        //}
 
         this.log("Platform - Accessory Found: " + widget.label);
         result.push(accessory);

@@ -2,9 +2,8 @@
 
 var WSListener = require('../libs/WSListener.js');
 
-var AbstractItem = function(widget,platform) {
-    AbstractItem.super_.call(this,widget,platform);
-
+var AbstractItem = function(widget,platform,homebridge) {
+    AbstractItem.super_.call(this, widget.item.name, homebridge.hap.uuid.generate(String(widget.item.name)));
     this.widget =  widget;
     this.label = widget.label;
     this.name = widget.item.name;
@@ -12,6 +11,7 @@ var AbstractItem = function(widget,platform) {
     this.state = widget.item.state;
     this.platform = platform;
     this.log = platform.log;
+    this.homebridge = homebridge;
 
     this.setInitialState = false;
     this.setFromOpenHAB = false;
@@ -22,7 +22,7 @@ var AbstractItem = function(widget,platform) {
 };
 
 AbstractItem.prototype.getInformationServices = function() {
-    var informationService = new Service.AccessoryInformation();
+    var informationService = new this.homebridge.hap.Service.AccessoryInformation();
 
     informationService
         .setCharacteristic(Characteristic.Manufacturer, "OpenHAB")

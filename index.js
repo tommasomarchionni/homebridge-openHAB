@@ -39,21 +39,22 @@
 
 //////// LIBS /////////
 
+var Homebridge;
 var request = require("request");
 var ItemFactory = require('./libs/ItemFactory.js');
 var Utility = require('./libs/Utility.js');
-var Service, Characteristic, Accessory, uuid;
 var AbstractItem = require('./items/AbstractItem');
 var SwitchItem = require('./items/SwitchItem');
-var currentModule = this;
 
 //////// EXPORTS /////////
 
 module.exports = function(homebridge) {
-    Service = homebridge.hap.Service;
-    Characteristic = homebridge.hap.Characteristic;
-    Accessory = homebridge.hap.Accessory;
-    uuid = homebridge.hap.uuid;
+    //Service = homebridge.hap.Service;
+    //Characteristic = homebridge.hap.Characteristic;
+    //Accessory = homebridge.hap.Accessory;
+    //uuid = homebridge.hap.uuid;
+
+    Homebridge = homebridge;
 
     Utility.addSupportTo(AbstractItem, Accessory);
     Utility.addSupportTo(SwitchItem, AbstractItem);
@@ -79,7 +80,7 @@ function OpenHABPlatform(log, config){
 OpenHABPlatform.prototype.accessories = function(callback) {
     var that = this;
     this.log("Platform - Fetching OpenHAB devices.");
-    var itemFactory = new ItemFactory(this,currentModule);
+    var itemFactory = new ItemFactory(this,homebridge);
     var url = itemFactory.sitemapUrl();
     this.log("Platform - Connecting to " + url);
     request.get({
