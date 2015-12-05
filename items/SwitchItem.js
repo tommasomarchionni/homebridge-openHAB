@@ -1,5 +1,7 @@
 "use strict";
 
+var request = require("request");
+
 var SwitchItem = function(widget,platform,homebridge) {
     SwitchItem.super_.call(this, widget,platform,homebridge);
 };
