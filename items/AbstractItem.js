@@ -25,10 +25,10 @@ AbstractItem.prototype.getInformationServices = function() {
     var informationService = new this.homebridge.hap.Service.AccessoryInformation();
 
     informationService
-        .setCharacteristic(Characteristic.Manufacturer, "OpenHAB")
-        .setCharacteristic(Characteristic.Model, this.constructor.name)
-        .setCharacteristic(Characteristic.SerialNumber, "N/A")
-        .setCharacteristic(Characteristic.Name, this.name);
+        .setCharacteristic(this.homebridge.hap.Characteristic.Manufacturer, "OpenHAB")
+        .setCharacteristic(this.homebridge.hap.Characteristic.Model, this.constructor.name)
+        .setCharacteristic(this.homebridge.hap.Characteristic.SerialNumber, "N/A")
+        .setCharacteristic(this.homebridge.hap.Characteristic.Name, this.name);
     return informationService;
 };
 

@@ -11,7 +11,7 @@ SwitchItem.prototype.getServices = function() {
     this.informationService = this.getInformationServices();
 
     this.otherService = new this.homebridge.hap.Service.Lightbulb();
-    this.otherService.getCharacteristic(Characteristic.On)
+    this.otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setItem.bind(this))
         .on('get', this.getItemPowerState.bind(this))
         .setValue(this.state === 'ON');
@@ -23,7 +23,7 @@ SwitchItem.prototype.updateCharacteristics = function(message) {
 
     this.setFromOpenHAB = true;
     this.otherService
-        .getCharacteristic(Characteristic.On)
+        .getCharacteristic(this.homebridge.hap.Characteristic.On)
         .setValue(message === 'ON',
             function() {
                 this.setFromOpenHAB = false;
