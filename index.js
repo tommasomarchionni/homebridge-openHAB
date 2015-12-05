@@ -39,7 +39,7 @@
 
 //////// LIBS /////////
 
-var Homebridge;
+var Homebridge, Accessory;
 var request = require("request");
 var ItemFactory = require('./libs/ItemFactory.js');
 var Utility = require('./libs/Utility.js');
@@ -51,7 +51,7 @@ var SwitchItem = require('./items/SwitchItem');
 module.exports = function(homebridge) {
     //Service = homebridge.hap.Service;
     //Characteristic = homebridge.hap.Characteristic;
-    //Accessory = homebridge.hap.Accessory;
+    Accessory = homebridge.hap.Accessory;
     //uuid = homebridge.hap.uuid;
 
     Homebridge = homebridge;
