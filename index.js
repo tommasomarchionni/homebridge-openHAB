@@ -43,8 +43,6 @@ var Homebridge, Accessory;
 var request = require("request");
 var ItemFactory = require('./libs/ItemFactory.js');
 var Utility = require('./libs/Utility.js');
-var AbstractItem = require('./items/AbstractItem');
-var SwitchItem = require('./items/SwitchItem');
 
 //////// EXPORTS /////////
 
@@ -56,8 +54,9 @@ module.exports = function(homebridge) {
 
     Homebridge = homebridge;
 
-    Utility.addSupportTo(AbstractItem, Accessory);
-    Utility.addSupportTo(SwitchItem, AbstractItem);
+    Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
+    Utility.addSupportTo(ItemFactory.SwitchItem, ItemFactory.AbstractItem);
+    Utility.addSupportTo(ItemFactory.DimmerItem, ItemFactory.AbstractItem);
 
     homebridge.registerPlatform("homebridge-openhab", "openHAB", OpenHABPlatform);
 };
