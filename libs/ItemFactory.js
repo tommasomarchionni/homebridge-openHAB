@@ -5,13 +5,13 @@ exports.AbstractItem = require('../items/AbstractItem.js');
 exports.SwitchItem = require('../items/SwitchItem.js');
 exports.DimmerItem = require('../items/DimmerItem.js');
 
-exports.ItemFactory = function(OpenHABPlatform,homebridge) {
+exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
     this.log = this.platform.log;
     this.homebridge = homebridge;
 };
 
-exports.ItemFactory.prototype.sitemapUrl = function () {
+exports.Factory.prototype.sitemapUrl = function () {
     var serverString = this.platform.host;
     //TODO da verificare
     if (this.platform.user && this.platform.password) {
@@ -21,7 +21,7 @@ exports.ItemFactory.prototype.sitemapUrl = function () {
     return this.platform.protocol + "://" + serverString + ":" + this.platform.port + "/rest/sitemaps/" + this.platform.sitemap + "?type=json";
 };
 
-exports.ItemFactory.prototype.parseSitemap = function (jsonSitemap) {
+exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
     var widgets = [].concat(jsonSitemap.homepage.widget);
 
     var result = [];

@@ -79,7 +79,7 @@ function OpenHABPlatform(log, config){
 OpenHABPlatform.prototype.accessories = function(callback) {
     var that = this;
     this.log("Platform - Fetching OpenHAB devices.");
-    var itemFactory = new ItemFactory(this,Homebridge);
+    var itemFactory = new ItemFactory.Factory(this,Homebridge);
     var url = itemFactory.sitemapUrl();
     this.log("Platform - Connecting to " + url);
     request.get({
