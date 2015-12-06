@@ -1,9 +1,9 @@
 "use strict";
 var exports = module.exports = {};
-var currentModule = this;
 exports.AbstractItem = require('../items/AbstractItem.js');
 exports.SwitchItem = require('../items/SwitchItem.js');
 exports.DimmerItem = require('../items/DimmerItem.js');
+exports.RollershutterItem = require('../items/RollershutterItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
@@ -33,14 +33,8 @@ exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
             continue;
         }
 
-        //if ("SwitchItem" === widget.item.type){
-        //    var accessory = new SwitchItem(widget,this.platform,this.homebridge);
-        //} else {
-        //    this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
-        //    continue;
-        //}
-        if (currentModule[widget.item.type] != undefined) {
-            var accessory = new currentModule[widget.item.type](widget,this.platform,this.homebridge);
+        if (exports[widget.item.type] != undefined) {
+            var accessory = new exports[widget.item.type](widget,this.platform,this.homebridge);
         } else {
             this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
             continue;

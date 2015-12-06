@@ -47,16 +47,13 @@ var Utility = require('./libs/Utility.js');
 //////// EXPORTS /////////
 
 module.exports = function(homebridge) {
-    //Service = homebridge.hap.Service;
-    //Characteristic = homebridge.hap.Characteristic;
     Accessory = homebridge.hap.Accessory;
-    //uuid = homebridge.hap.uuid;
-
     Homebridge = homebridge;
 
     Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
     Utility.addSupportTo(ItemFactory.SwitchItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.DimmerItem, ItemFactory.AbstractItem);
+    Utility.addSupportTo(ItemFactory.RollershutterItem, ItemFactory.AbstractItem);
 
     homebridge.registerPlatform("homebridge-openhab", "openHAB", OpenHABPlatform);
 };
