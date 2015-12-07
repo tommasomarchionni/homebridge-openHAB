@@ -16,6 +16,7 @@ WSListener.prototype.startListener = function () {
 
     this.item.ws.on('open', function() {
         self.item.log("OpenHAB WS - new connection for "+self.item.name);
+        self.runForever(15000);
     });
 
     this.item.ws.on('message', function(message) {
@@ -28,6 +29,18 @@ WSListener.prototype.startListener = function () {
         self.item.listener = undefined;
         self.item.ws = undefined;
     });
+};
+
+WSListener.prototype.runForever = function (interval) {
+    var self = this;
+    var intervalId = setInterval(function timeout() {
+        if (typeof self.item.ws !== 'undefined'){
+            self.item.ws.ping();
+            console.log("Ping!");
+        } else {
+            clearInterval(intervalId);
+        }
+    }, interval);
 };
 
 module.exports = WSListener;
