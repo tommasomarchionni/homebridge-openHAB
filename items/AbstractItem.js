@@ -23,15 +23,18 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.serialNumber = "N/A";
 
     for (var key in this.platform.customAttrs) {
-        if (this.platform.customAttrs.hasOwnProperty(key) && this.platform.customAttrs[key] === this.widget.item.name){
-            if (typeof this.platform.customAttrs[key][itemManufacturer] !== 'undefined'){
-                this.manufacturer=this.platform.customAttrs[key][itemManufacturer];
+        if (this.platform.customAttrs.hasOwnProperty(key) && this.platform.customAttrs[key]['itemName'] === this.widget.item.name){
+            if (typeof this.platform.customAttrs[key]['itemLabel'] !== 'undefined'){
+                this.label=this.platform.customAttrs[key]['itemLabel'];
             }
-            if (typeof this.platform.customAttrs[key][itemModel] !== 'undefined'){
-                this.manufacturer=this.platform.customAttrs[key][itemModel];
+            if (typeof this.platform.customAttrs[key]['itemManufacturer'] !== 'undefined'){
+                this.manufacturer=this.platform.customAttrs[key]['itemManufacturer'];
             }
-            if (typeof this.platform.customAttrs[key][itemSerialNumber] !== 'undefined'){
-                this.manufacturer=this.platform.customAttrs[key][itemSerialNumber];
+            if (typeof this.platform.customAttrs[key]['itemModel'] !== 'undefined'){
+                this.model=this.platform.customAttrs[key]['itemModel'];
+            }
+            if (typeof this.platform.customAttrs[key]['itemSerialNumber'] !== 'undefined'){
+                this.serialNumber=this.platform.customAttrs[key]['itemSerialNumber'];
             }
         }
     }
