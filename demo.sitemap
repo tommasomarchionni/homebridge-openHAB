@@ -1,0 +1,5 @@
+sitemap demo label="demo" {
+	Switch item=Demo_Switch label="Demo Switch"
+	Slider item=Demo_Dimmer label="Demo Dimmer"
+	Switch item=Demo_Shutter label="Demo Shutter"
+}

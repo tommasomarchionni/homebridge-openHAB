@@ -17,7 +17,24 @@
       "name": "openHAB",
       "host": "PUT IP ADDRESS OF YOUR OPENHAB HERE (127.0.0.1)",
       "port": "PUT PORT OF YOUR OPENHAB HERE (8080)",
-      "sitemap":"PUT SITEMAP OF YOUR OPENHAB HERE (demo)"
+      "sitemap":"PUT SITEMAP OF YOUR OPENHAB HERE (demo)",
+      "useLabelForName": true,
+      "customAttrs": [
+        {
+          "itemName":"Demo_Switch",
+          "itemLabel":"Demo Switch Label",
+          "itemManufacturer": "Demo Manufacter Switch",
+          "itemModel": "Demo Model Switch",
+          "itemSerialNumber":"12345678"
+        },
+        {
+          "itemName":"Demo_Dimmer",
+          "itemLabel":"Demo Dimmer Label",
+          "itemManufacturer": "Demo Manufacter Dimmer",
+          "itemModel": "Demo Model Dimmer",
+          "itemSerialNumber":"23456789"
+        }
+      ]
     }
   ]
 }

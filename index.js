@@ -68,8 +68,14 @@ function OpenHABPlatform(log, config){
     this.port     = config["port"];
     this.protocol = "http";
     this.sitemap  = "demo";
+    this.useLabelForName = config["useLabelForName"];
     if (typeof config["sitemap"] != 'undefined') {
         this.sitemap = config["sitemap"];
+    }
+    if (typeof config["customAttrs"] != 'undefined') {
+        this.customAttrs = config["customAttrs"];
+    } else {
+        this.customAttrs = [];
     }
 }
 
