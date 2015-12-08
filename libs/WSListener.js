@@ -36,7 +36,6 @@ WSListener.prototype.runForever = function (interval) {
     var intervalId = setInterval(function timeout() {
         if (typeof self.item.ws !== 'undefined'){
             self.item.ws.ping();
-            console.log("Ping!");
         } else {
             clearInterval(intervalId);
         }
