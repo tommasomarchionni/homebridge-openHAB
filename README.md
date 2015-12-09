@@ -7,6 +7,8 @@ The plugin is published through [NPM](https://www.npmjs.com/package/homebridge-o
 ```
 npm install -g homebridge-openhab
 ```
+Update your config.json file. See config.json in this repository for a sample.
+
 # Configuration
 
 Configuration sample:
@@ -17,7 +19,37 @@ Configuration sample:
         "name": "openHAB",
         "host": "192.168.0.100",
         "port": "8080",
-        "sitemap": "demo"
+        "sitemap": "demo",
+        "useLabelForName": true,
+        "customAttrs": [
+            {
+                "itemName":"Demo_Switch",
+                "itemLabel":"Demo Switch Label",
+                "itemManufacturer": "Demo Manufacter Switch",
+                "itemModel": "Demo Model Switch",
+                "itemSerialNumber":"12345678"
+            },
+            {
+                "itemName":"Demo_Dimmer",
+                "itemLabel":"Demo Dimmer Label",
+                "itemManufacturer": "Demo Manufacter Dimmer",
+                "itemModel": "Demo Model Dimmer",
+                "itemSerialNumber":"23456789"
+            }
+        ]    
     }
 ]
 ```
+Fields: 
+* "platform" - Must be set to openHAB
+* "name" - Name of openHAB server, default openHAB
+* "host" - IP address of the openHAB server
+* "port" - Port of the openHAB server
+* "sitemap" - Sitemap name, see demo.sitemap in this repository for a sample
+* "useLabelForName" - true if you want use item's label in the name field of HomeKit, useful if you want to use Siri
+* "customAttrs" - Array of objects specifying for defining field in HomeKit catalog
+* (Under customAttrs) "itemName" - item's name
+* (Under customAttrs) "itemLabel" - item's label
+* (Under customAttrs) "itemManufacturer" - item's manufacter
+* (Under customAttrs) "itemModel" - item's model
+* (Under customAttrs) "itemSerialNumber" - item's serial number
