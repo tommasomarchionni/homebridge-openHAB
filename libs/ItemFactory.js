@@ -4,6 +4,7 @@ exports.AbstractItem = require('../items/AbstractItem.js');
 exports.SwitchItem = require('../items/SwitchItem.js');
 exports.DimmerItem = require('../items/DimmerItem.js');
 exports.RollershutterItem = require('../items/RollershutterItem.js');
+exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
@@ -32,13 +33,22 @@ exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
             this.log("Platform - The widget '" + widget.label + "' is not an item.");
             continue;
         }
+        var abstractItem = new exports.AbstractItem(widget,this.platform,this.homebridge);
+        var accessory = abstractItem.getItem(exports);
+        abstractItem = null;
 
-        if (exports[widget.item.type] != undefined) {
-            var accessory = new exports[widget.item.type](widget,this.platform,this.homebridge);
-        } else {
+        if (typeof accessory == 'undefined'){
             this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
             continue;
         }
+
+
+        //if (exports[widget.item.type] != undefined) {
+        //    var accessory = new exports[widget.item.type](widget,this.platform,this.homebridge);
+        //} else {
+        //    this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
+        //    continue;
+        //}
 
         this.log("Platform - Accessory Found: " + widget.label);
         result.push(accessory);

@@ -11,6 +11,7 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.url = this.widget.item.link;
     this.state = this.widget.item.state;
     this.log = this.platform.log;
+    this.itemType=this.widget.item.type;
 
     this.setInitialState = false;
     this.setFromOpenHAB = false;
@@ -21,6 +22,7 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.manufacturer = "OpenHAB";
     this.model = this.constructor.name;
     this.serialNumber = "N/A";
+
 
     for (var key in this.platform.customAttrs) {
         if (this.platform.customAttrs.hasOwnProperty(key) && this.platform.customAttrs[key]['itemName'] === this.widget.item.name){
@@ -35,6 +37,9 @@ var AbstractItem = function(widget,platform,homebridge) {
             }
             if (typeof this.platform.customAttrs[key]['itemSerialNumber'] !== 'undefined'){
                 this.serialNumber=this.platform.customAttrs[key]['itemSerialNumber'];
+            }
+            if (typeof this.platform.customAttrs[key]['itemType'] !== 'undefined'){
+                this.itemType=this.platform.customAttrs[key]['itemType'];
             }
         }
     }
@@ -63,6 +68,12 @@ AbstractItem.prototype.checkListener = function() {
         this.listener = new WSListener(this, this.updateCharacteristics.bind(this));
         this.listener.startListener();
     }
+};
+
+AbstractItem.prototype.getItem = function(exports) {
+
+    return new exports[this.itemType](this.widget,this.platform,this.homebridge);
+
 };
 
 module.exports = AbstractItem;

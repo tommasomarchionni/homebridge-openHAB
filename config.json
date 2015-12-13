@@ -33,6 +33,14 @@
           "itemManufacturer": "Demo Manufacter Dimmer",
           "itemModel": "Demo Model Dimmer",
           "itemSerialNumber":"23456789"
+        },
+        {
+          "itemName":"Demo_Temperature",
+          "itemLabel":"Demo Temperature",
+          "itemManufacturer": "Demo Manufacter Temperature",
+          "itemModel": "Demo Model Temperature",
+          "itemSerialNumber":"23456781",
+          "itemType": "TemperatureSensorItem"
         }
       ]
     }

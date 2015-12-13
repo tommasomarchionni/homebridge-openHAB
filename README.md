@@ -35,6 +35,14 @@ Configuration sample:
                 "itemManufacturer": "Demo Manufacter Dimmer",
                 "itemModel": "Demo Model Dimmer",
                 "itemSerialNumber":"23456789"
+            },
+            {
+                "itemName":"Demo_Temperature",
+                "itemLabel":"Demo Temperature",
+                "itemManufacturer": "Demo Manufacter Temperature",
+                "itemModel": "Demo Model Temperature",
+                "itemSerialNumber":"23456781",
+                "itemType": "TemperatureSensorItem"
             }
         ]    
     }
@@ -53,3 +61,4 @@ Fields:
 * (Under customAttrs) "itemManufacturer" - item's manufacter
 * (Under customAttrs) "itemModel" - item's model
 * (Under customAttrs) "itemSerialNumber" - item's serial number
+* (Under customAttrs) "itemType" - you must set this value to "TemperatureSensorItem" if the item is a Temperature Sensor

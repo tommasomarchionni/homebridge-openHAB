@@ -13,21 +13,9 @@
 // 5 December 2015 [tommasomarchionni]
 // - Adapted for new plugin system
 //
-// Remember to add platform to config.json. Example:
-// "platforms": [
-//{
-//    "platform": "openHAB",
-//    "name": "openHAB",
-//    "host": "PUT IP ADDRESS OF YOUR OPENHAB HERE (127.0.0.1)",
-//    "port": "PUT PORT OF YOUR OPENHAB HERE (8080)",
-//    "sitemap":"PUT SITEMAP OF YOUR OPENHAB HERE (demo)"
-//}
-//]
+// 14 December 2015 [tommasomarchionni]
+// - Added temperature sensor item
 //
-// Example of sitemap in OpenHAB:
-// sitemap homekit label="HomeKit" {
-//	   Switch item=Light_1 label="Light 1"
-// }
 //
 // Rollershutter is tested with this binding in OpenHAB:
 // command=SWITCH_MULTILEVEL,invert_percent=true,invert_state=false"
@@ -54,6 +42,7 @@ module.exports = function(homebridge) {
     Utility.addSupportTo(ItemFactory.SwitchItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.DimmerItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.RollershutterItem, ItemFactory.AbstractItem);
+    Utility.addSupportTo(ItemFactory.TemperatureSensorItem, ItemFactory.AbstractItem);
 
     homebridge.registerPlatform("homebridge-openhab", "openHAB", OpenHABPlatform);
 };
