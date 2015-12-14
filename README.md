@@ -61,4 +61,4 @@ Fields:
 * (Under customAttrs) "itemManufacturer" - item's manufacter
 * (Under customAttrs) "itemModel" - item's model
 * (Under customAttrs) "itemSerialNumber" - item's serial number
-* (Under customAttrs) "itemType" - you must set this value to "TemperatureSensorItem" if the item is a Temperature Sensor
+* (Under customAttrs) "itemType": use "TemperatureSensorItem" for Temperature Sensor, "FanItem" for Fan, "LightbulbItem" for Lightbulb.

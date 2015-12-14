@@ -15,7 +15,7 @@
 //
 // 14 December 2015 [tommasomarchionni]
 // - Added temperature sensor item
-//
+// - Added switch item,lightbulb item and fan item
 //
 // Rollershutter is tested with this binding in OpenHAB:
 // command=SWITCH_MULTILEVEL,invert_percent=true,invert_state=false"
@@ -40,6 +40,8 @@ module.exports = function(homebridge) {
 
     Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
     Utility.addSupportTo(ItemFactory.SwitchItem, ItemFactory.AbstractItem);
+    Utility.addSupportTo(ItemFactory.LightbulbItem, ItemFactory.SwitchItem);
+    Utility.addSupportTo(ItemFactory.FanItem, ItemFactory.SwitchItem);
     Utility.addSupportTo(ItemFactory.DimmerItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.RollershutterItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.TemperatureSensorItem, ItemFactory.AbstractItem);

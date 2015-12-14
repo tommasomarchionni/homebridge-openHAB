@@ -12,7 +12,7 @@ SwitchItem.prototype.getServices = function() {
     this.setInitialState = true;
     this.informationService = this.getInformationServices();
 
-    this.otherService = new this.homebridge.hap.Service.Lightbulb();
+    this.otherService = new this.homebridge.hap.Service.Switch();
     this.otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setItem.bind(this))
         .on('get', this.getItemPowerState.bind(this))

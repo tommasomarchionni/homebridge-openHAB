@@ -2,6 +2,8 @@
 var exports = module.exports = {};
 exports.AbstractItem = require('../items/AbstractItem.js');
 exports.SwitchItem = require('../items/SwitchItem.js');
+exports.LightbulbItem = require('../items/LightbulbItem.js');
+exports.FanItem = require('../items/FanItem.js');
 exports.DimmerItem = require('../items/DimmerItem.js');
 exports.RollershutterItem = require('../items/RollershutterItem.js');
 exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');
@@ -41,14 +43,6 @@ exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
             this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
             continue;
         }
-
-
-        //if (exports[widget.item.type] != undefined) {
-        //    var accessory = new exports[widget.item.type](widget,this.platform,this.homebridge);
-        //} else {
-        //    this.log("Platform - The widget '" + widget.label + "' of type "+widget.item.type+" is an item not handled.");
-        //    continue;
-        //}
 
         this.log("Platform - Accessory Found: " + widget.label);
         result.push(accessory);

@@ -28,6 +28,22 @@
           "itemSerialNumber":"12345678"
         },
         {
+          "itemName":"Demo_Lightbulb",
+          "itemLabel":"Demo Lightbulb Label",
+          "itemManufacturer": "Demo Manufacter Lightbulb",
+          "itemModel": "Demo Model Lightbulb",
+          "itemSerialNumber":"12345678",
+          "itemType":"LightbulbItem"
+        },
+        {
+          "itemName":"Demo_Fan",
+          "itemLabel":"Demo Fan Label",
+          "itemManufacturer": "Demo Manufacter Fan",
+          "itemModel": "Demo Model Fan",
+          "itemSerialNumber":"12345678",
+          "itemType":"FanItem"
+        },
+        {
           "itemName":"Demo_Dimmer",
           "itemLabel":"Demo Dimmer Label",
           "itemManufacturer": "Demo Manufacter Dimmer",
