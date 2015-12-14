@@ -7,7 +7,7 @@ exports.FanItem = require('../items/FanItem.js');
 exports.DimmerItem = require('../items/DimmerItem.js');
 exports.RollershutterItem = require('../items/RollershutterItem.js');
 exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');
-exports.NumberItem = require('../items/TemperatureSensorItem.js');
+exports.NumberItem = require('../items/NumberItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
