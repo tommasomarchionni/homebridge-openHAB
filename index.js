@@ -45,6 +45,7 @@ module.exports = function(homebridge) {
     Utility.addSupportTo(ItemFactory.DimmerItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.RollershutterItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.TemperatureSensorItem, ItemFactory.AbstractItem);
+    Utility.addSupportTo(ItemFactory.NumberItem, ItemFactory.TemperatureSensorItem);
 
     homebridge.registerPlatform("homebridge-openhab", "openHAB", OpenHABPlatform);
 };

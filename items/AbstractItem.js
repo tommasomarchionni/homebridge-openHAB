@@ -71,9 +71,10 @@ AbstractItem.prototype.checkListener = function() {
 };
 
 AbstractItem.prototype.getItem = function(exports) {
-
-    return new exports[this.itemType](this.widget,this.platform,this.homebridge);
-
+    if (this.itemType in exports)
+        return new exports[this.itemType](this.widget,this.platform,this.homebridge);
+    else
+        return undefined;
 };
 
 module.exports = AbstractItem;
