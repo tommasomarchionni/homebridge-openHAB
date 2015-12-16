@@ -56,7 +56,8 @@
           "itemManufacturer": "Demo Manufacter Temperature",
           "itemModel": "Demo Model Temperature",
           "itemSerialNumber":"23456781",
-          "itemType": "TemperatureSensorItem"
+          "itemType": "TemperatureSensorItem",
+          "skipItem": false,
         }
       ]
     }

@@ -43,6 +43,7 @@ Configuration sample:
                 "itemModel": "Demo Model Temperature",
                 "itemSerialNumber":"23456781",
                 "itemType": "TemperatureSensorItem"
+                "skipItem": false,
             }
         ]    
     }
@@ -62,3 +63,4 @@ Fields:
 * (Under customAttrs) "itemModel" - item's model
 * (Under customAttrs) "itemSerialNumber" - item's serial number
 * (Under customAttrs) "itemType": use "TemperatureSensorItem" for Temperature Sensor, "FanItem" for Fan, "LightbulbItem" for Lightbulb.
+* (Under customAttrs) "skipItem": set to true if you want avoid to load the item in Homekit catalog, default is false.

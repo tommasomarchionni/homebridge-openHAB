@@ -8,10 +8,10 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.homebridge = homebridge;
 
     this.label = this.widget.label;
-    this.url = this.widget.item.link;
-    this.state = this.widget.item.state;
+    this.url = this.widget.link;
+    this.state = this.widget.state;
     this.log = this.platform.log;
-    this.itemType=this.widget.item.type;
+    this.itemType=this.widget.type;
 
     this.setInitialState = false;
     this.setFromOpenHAB = false;
@@ -22,10 +22,10 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.manufacturer = "OpenHAB";
     this.model = this.constructor.name;
     this.serialNumber = "N/A";
-
+    this.skipItem = false;
 
     for (var key in this.platform.customAttrs) {
-        if (this.platform.customAttrs.hasOwnProperty(key) && this.platform.customAttrs[key]['itemName'] === this.widget.item.name){
+        if (this.platform.customAttrs.hasOwnProperty(key) && this.platform.customAttrs[key]['itemName'] === this.widget.name){
             if (typeof this.platform.customAttrs[key]['itemLabel'] !== 'undefined'){
                 this.label=this.platform.customAttrs[key]['itemLabel'];
             }
@@ -41,11 +41,13 @@ var AbstractItem = function(widget,platform,homebridge) {
             if (typeof this.platform.customAttrs[key]['itemType'] !== 'undefined'){
                 this.itemType=this.platform.customAttrs[key]['itemType'];
             }
+            if (typeof this.platform.customAttrs[key]['skipItem'] !== 'undefined'){
+                this.skipItem=this.platform.customAttrs[key]['skipItem'];
+            }
         }
     }
 
-    this.name = this.platform.useLabelForName ? this.label : this.widget.item.name;
-
+    this.name = this.platform.useLabelForName ? this.label : this.widget.name;
     AbstractItem.super_.call(this, this.name, homebridge.hap.uuid.generate(String(this.name)));
 
 };
@@ -71,7 +73,8 @@ AbstractItem.prototype.checkListener = function() {
 };
 
 AbstractItem.prototype.getItem = function(exports) {
-    if (this.itemType in exports)
+
+    if ((this.itemType in exports) && !this.skipItem)
         return new exports[this.itemType](this.widget,this.platform,this.homebridge);
     else
         return undefined;

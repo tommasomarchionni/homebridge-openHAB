@@ -17,6 +17,10 @@
 // - Added temperature sensor item
 // - Added switch item,lightbulb item and fan item
 //
+// 16 December 2015 [tommasomarchionni]
+// - Added the possibility to load every type of sitemap
+// - Added skipItem in customAttr to avoid to load item in Homekit catalog
+//
 // Rollershutter is tested with this binding in OpenHAB:
 // command=SWITCH_MULTILEVEL,invert_percent=true,invert_state=false"
 // When you attempt to add a device, it will ask for a "PIN code".
