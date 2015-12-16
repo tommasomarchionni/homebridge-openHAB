@@ -44,6 +44,14 @@
           "itemType":"FanItem"
         },
         {
+          "itemName":"Demo_Outlet",
+          "itemLabel":"Demo Outlet Label",
+          "itemManufacturer": "Demo Manufacter Outlet",
+          "itemModel": "Demo Model Outlet",
+          "itemSerialNumber":"123456378",
+          "itemType":"OutletItem"
+        },
+        {
           "itemName":"Demo_Dimmer",
           "itemLabel":"Demo Dimmer Label",
           "itemManufacturer": "Demo Manufacter Dimmer",

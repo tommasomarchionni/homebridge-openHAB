@@ -4,6 +4,7 @@ exports.AbstractItem = require('../items/AbstractItem.js');
 exports.SwitchItem = require('../items/SwitchItem.js');
 exports.LightbulbItem = require('../items/LightbulbItem.js');
 exports.FanItem = require('../items/FanItem.js');
+exports.OutletItem = require('../items/OutletItem.js');
 exports.DimmerItem = require('../items/DimmerItem.js');
 exports.RollershutterItem = require('../items/RollershutterItem.js');
 exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');

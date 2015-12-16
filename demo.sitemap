@@ -1,5 +1,6 @@
 sitemap demo label="demo" {
 	Switch item=Demo_Switch label="Demo Switch"
+	Switch item=Demo_Outlet label="Demo Outlet"
 	Slider item=Demo_Dimmer label="Demo Dimmer"
 	Switch item=Demo_Shutter label="Demo Shutter"
 	Text item=Demo_Temperature label="Demo Temperature"

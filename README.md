@@ -30,6 +30,30 @@ Configuration sample:
                 "itemSerialNumber":"12345678"
             },
             {
+                "itemName":"Demo_Lightbulb",
+                "itemLabel":"Demo Lightbulb Label",
+                "itemManufacturer": "Demo Manufacter Lightbulb",
+                "itemModel": "Demo Model Lightbulb",
+                "itemSerialNumber":"12345678",
+                "itemType":"LightbulbItem"
+            },
+            {
+                "itemName":"Demo_Fan",
+                "itemLabel":"Demo Fan Label",
+                "itemManufacturer": "Demo Manufacter Fan",
+                "itemModel": "Demo Model Fan",
+                "itemSerialNumber":"12345678",
+                "itemType":"FanItem"
+            },
+            {
+                "itemName":"Demo_Outlet",
+                "itemLabel":"Demo Outlet Label",
+                "itemManufacturer": "Demo Manufacter Outlet",
+                "itemModel": "Demo Model Outlet",
+                "itemSerialNumber":"123456378",
+                "itemType":"OutletItem"
+            },
+            {
                 "itemName":"Demo_Dimmer",
                 "itemLabel":"Demo Dimmer Label",
                 "itemManufacturer": "Demo Manufacter Dimmer",
@@ -42,7 +66,7 @@ Configuration sample:
                 "itemManufacturer": "Demo Manufacter Temperature",
                 "itemModel": "Demo Model Temperature",
                 "itemSerialNumber":"23456781",
-                "itemType": "TemperatureSensorItem"
+                "itemType": "TemperatureSensorItem",
                 "skipItem": false,
             }
         ]    
@@ -62,5 +86,5 @@ Fields:
 * (Under customAttrs) "itemManufacturer" - item's manufacter
 * (Under customAttrs) "itemModel" - item's model
 * (Under customAttrs) "itemSerialNumber" - item's serial number
-* (Under customAttrs) "itemType": use "TemperatureSensorItem" for Temperature Sensor, "FanItem" for Fan, "LightbulbItem" for Lightbulb.
+* (Under customAttrs) "itemType": use "TemperatureSensorItem" for Temperature Sensor, "FanItem" for Fan, "LightbulbItem" for Lightbulb, "OutletItem" for Outlet.
 * (Under customAttrs) "skipItem": set to true if you want avoid to load the item in Homekit catalog, default is false.
