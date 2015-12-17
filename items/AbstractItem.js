@@ -52,6 +52,18 @@ var AbstractItem = function(widget,platform,homebridge) {
 
 };
 
+AbstractItem.prototype.getServices = function() {
+    this.checkListener();
+    this.setInitialState = true;
+    this.informationService = this.getInformationServices();
+    this.otherService = this.getOtherServices();
+    return [this.informationService, this.otherService];
+};
+
+AbstractItem.prototype.getOtherServices = function() {
+    return null;
+};
+
 AbstractItem.prototype.getInformationServices = function() {
     var informationService = new this.homebridge.hap.Service.AccessoryInformation();
 
