@@ -80,7 +80,7 @@ Fields:
 * "port" - Port of the openHAB server
 * "sitemap" - Sitemap name, see demo.sitemap in this repository for a sample
 * "useLabelForName" - true if you want use item's label in the name field of HomeKit, useful if you want to use Siri
-* "customAttrs" - Array of objects specifying for defining field in HomeKit catalog
+* "customAttrs" - You should add this section only if you want custom attributes for your openhab's items in defined sitemap
 * (Under customAttrs) "itemName" - item's name
 * (Under customAttrs) "itemLabel" - item's label
 * (Under customAttrs) "itemManufacturer" - item's manufacter

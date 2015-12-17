@@ -6,19 +6,15 @@ var SwitchItem = function(widget,platform,homebridge) {
     SwitchItem.super_.call(this, widget,platform,homebridge);
 };
 
-SwitchItem.prototype.getServices = function() {
+SwitchItem.prototype.getOtherServices = function() {
+    var otherService = new this.homebridge.hap.Service.Switch();
 
-    this.checkListener();
-    this.setInitialState = true;
-    this.informationService = this.getInformationServices();
-
-    this.otherService = new this.homebridge.hap.Service.Switch();
-    this.otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
-        .on('set', this.setItem.bind(this))
-        .on('get', this.getItemPowerState.bind(this))
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
+        .on('set', this.setItemState.bind(this))
+        .on('get', this.getItemState.bind(this))
         .setValue(this.state === 'ON');
 
-    return [this.informationService, this.otherService];
+    return otherService;
 };
 
 SwitchItem.prototype.updateCharacteristics = function(message) {
@@ -33,7 +29,7 @@ SwitchItem.prototype.updateCharacteristics = function(message) {
         );
 };
 
-SwitchItem.prototype.getItemPowerState = function(callback) {
+SwitchItem.prototype.getItemState = function(callback) {
 
     var self = this;
     this.checkListener();
@@ -49,7 +45,7 @@ SwitchItem.prototype.getItemPowerState = function(callback) {
     })
 };
 
-SwitchItem.prototype.setItem = function(value, callback) {
+SwitchItem.prototype.setItemState = function(value, callback) {
 
     var self = this;
     this.checkListener();

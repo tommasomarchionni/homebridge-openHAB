@@ -9,6 +9,7 @@ exports.DimmerItem = require('../items/DimmerItem.js');
 exports.RollershutterItem = require('../items/RollershutterItem.js');
 exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');
 exports.NumberItem = require('../items/NumberItem.js');
+exports.ContactItem = require('../items/ContactItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
@@ -30,8 +31,6 @@ exports.Factory.prototype.sitemapUrl = function () {
 exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
 
     exports.Factory.prototype.traverseSitemap(jsonSitemap,this);
-
-    console.log(this.itemList);
 
     var accessoryList = [];
     for (var key in this.itemList) {

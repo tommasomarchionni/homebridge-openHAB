@@ -6,20 +6,17 @@ var TemperatureSensorItem = function(widget,platform,homebridge) {
     TemperatureSensorItem.super_.call(this, widget,platform,homebridge);
 };
 
-TemperatureSensorItem.prototype.getServices = function() {
+TemperatureSensorItem.prototype.getOtherServices = function() {
+    var otherService = new this.homebridge.hap.Service.TemperatureSensor();
 
-    this.checkListener();
-    this.informationService = this.getInformationServices();
+    otherService.getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
+        .on('get', this.getItemState.bind(this))
+        .setValue(this.checkItemState(this.state));
 
-    this.otherService = new this.homebridge.hap.Service.TemperatureSensor();
-    this.otherService.getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
-        .on('get', this.getItemTemperatureState.bind(this))
-        .setValue(this.checkState(this.state));
-
-    return [this.informationService, this.otherService];
+    return otherService;
 };
 
-TemperatureSensorItem.prototype.checkState = function(state) {
+TemperatureSensorItem.prototype.checkItemState = function(state) {
     if ('Unitialized' === state){
         return 0.0;
     }
@@ -30,10 +27,10 @@ TemperatureSensorItem.prototype.checkState = function(state) {
 TemperatureSensorItem.prototype.updateCharacteristics = function(message) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
-        .setValue(this.checkState(message));
+        .setValue(this.checkItemState(message));
 };
 
-TemperatureSensorItem.prototype.getItemTemperatureState = function(callback) {
+TemperatureSensorItem.prototype.getItemState = function(callback) {
 
     var self = this;
     this.checkListener();
@@ -42,7 +39,7 @@ TemperatureSensorItem.prototype.getItemTemperatureState = function(callback) {
     request(this.url + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             self.log("OpenHAB HTTP - response from " + self.name + ": " + body);
-            callback(undefined,+body);
+            callback(undefined,self.checkItemState(body));
         } else {
             self.log("OpenHAB HTTP - error from " + self.name + ": " + error);
         }
