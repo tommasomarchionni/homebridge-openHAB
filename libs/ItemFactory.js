@@ -10,6 +10,7 @@ exports.RollershutterItem = require('../items/RollershutterItem.js');
 exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');
 exports.NumberItem = require('../items/NumberItem.js');
 exports.ContactItem = require('../items/ContactItem.js');
+exports.MotionSensorItem = require('../items/MotionSensorItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
@@ -75,7 +76,6 @@ exports.Factory.prototype.traverseSitemap = function(jsonSitmap,factory) {
             }
 
             if ((typeof(jsonSitmap[key].widget) !== 'undefined') || (typeof(jsonSitmap[key].linkedPage) !== 'undefined') || key === 'widget'){
-
                 if (typeof(jsonSitmap[key].widget) !== 'undefined'){
                     exports.Factory.prototype.traverseSitemap(jsonSitmap[key].widget,factory);
                 } else if(key === 'widget')  {
