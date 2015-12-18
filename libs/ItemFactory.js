@@ -11,6 +11,7 @@ exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');
 exports.NumberItem = require('../items/NumberItem.js');
 exports.ContactItem = require('../items/ContactItem.js');
 exports.MotionSensorItem = require('../items/MotionSensorItem.js');
+exports.LightSensorItem = require('../items/LightSensorItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
