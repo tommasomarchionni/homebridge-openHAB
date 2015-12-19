@@ -2,11 +2,12 @@ homebridge-openHAB
 =============
 [Homebridge](https://www.npmjs.com/package/homebridge) plugin for [openHAB](http://www.openhab.org).
 
-##### Prerequisites
+
+## Prerequisites
 * [openHAB](http://www.openhab.org)
 * [node.js](https://nodejs.org)
 
-##### Installation
+## Installation
 * Install the mdns and avahi library:
 
   `sudo apt-get install libnss-mdns libavahi-compat-libdnssd-dev`
@@ -18,7 +19,7 @@ homebridge-openHAB
   `npm install -g homebridge-openhab`
 * Update your config.json file (usually is in your home/.homebridge/ directory, if you can't find, follow the instruction in [homebridge](https://www.npmjs.com/package/homebridge)). See config.json in this repository for a sample.
 
-##### Configuration (config.json)
+## Configuration (config.json)
 ```
 "platforms": [
     {
@@ -39,7 +40,7 @@ Fields:
 * "sitemap" - Sitemap name of your openHAB server
 * "useLabelForName" - true if you want use item's label in the name field of HomeKit, useful if you want to use Siri. If you set this attribute to true it's important that you have unique label in your sitemap.
 
-##### Advanced configuration (config.json)
+## Advanced configuration (config.json)
 If you want set custom attributes to your openHAB's item you should add "customAttrs" attribute to your config.json file.
 In this section you can change these attributes:
 * "itemLabel" - you can set a different label,
