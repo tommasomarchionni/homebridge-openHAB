@@ -7,9 +7,9 @@ homebridge-openHAB
 * [node.js](https://nodejs.org)
 
 ##### Installation
-* Install the avahi library:
+* Install the mdns and avahi library:
 
-  `sudo apt-get install libavahi-compat-libdnssd-dev`
+  `sudo apt-get install libnss-mdns libavahi-compat-libdnssd-dev`
 * Install [homebridge](https://www.npmjs.com/package/homebridge):
 
   `npm install -g homebridge`
