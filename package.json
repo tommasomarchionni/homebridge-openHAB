@@ -1,6 +1,6 @@
 {
   "name": "homebridge-openhab",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "Homebridge plugin for openHAB",
   "main": "index.js",
   "scripts": {
