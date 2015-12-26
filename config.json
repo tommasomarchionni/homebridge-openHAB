@@ -15,59 +15,10 @@
     {
       "platform": "openHAB",
       "name": "openHAB",
-      "host": "PUT IP ADDRESS OF YOUR OPENHAB HERE (127.0.0.1)",
-      "port": "PUT PORT OF YOUR OPENHAB HERE (8080)",
-      "sitemap":"PUT SITEMAP OF YOUR OPENHAB HERE (demo)",
-      "useLabelForName": true,
-      "customAttrs": [
-        {
-          "itemName":"Demo_Switch",
-          "itemLabel":"Demo Switch Label",
-          "itemManufacturer": "Demo Manufacter Switch",
-          "itemModel": "Demo Model Switch",
-          "itemSerialNumber":"12345678"
-        },
-        {
-          "itemName":"Demo_Lightbulb",
-          "itemLabel":"Demo Lightbulb Label",
-          "itemManufacturer": "Demo Manufacter Lightbulb",
-          "itemModel": "Demo Model Lightbulb",
-          "itemSerialNumber":"12345678",
-          "itemType":"LightbulbItem"
-        },
-        {
-          "itemName":"Demo_Fan",
-          "itemLabel":"Demo Fan Label",
-          "itemManufacturer": "Demo Manufacter Fan",
-          "itemModel": "Demo Model Fan",
-          "itemSerialNumber":"12345678",
-          "itemType":"FanItem"
-        },
-        {
-          "itemName":"Demo_Outlet",
-          "itemLabel":"Demo Outlet Label",
-          "itemManufacturer": "Demo Manufacter Outlet",
-          "itemModel": "Demo Model Outlet",
-          "itemSerialNumber":"123456378",
-          "itemType":"OutletItem"
-        },
-        {
-          "itemName":"Demo_Dimmer",
-          "itemLabel":"Demo Dimmer Label",
-          "itemManufacturer": "Demo Manufacter Dimmer",
-          "itemModel": "Demo Model Dimmer",
-          "itemSerialNumber":"23456789"
-        },
-        {
-          "itemName":"Demo_Temperature",
-          "itemLabel":"Demo Temperature",
-          "itemManufacturer": "Demo Manufacter Temperature",
-          "itemModel": "Demo Model Temperature",
-          "itemSerialNumber":"23456781",
-          "itemType": "TemperatureSensorItem",
-          "skipItem": false,
-        }
-      ]
+      "host": "127.0.0.1",
+      "port": "8080",
+      "sitemap":"demo",
+      "useLabelForName": true
     }
   ]
 }
