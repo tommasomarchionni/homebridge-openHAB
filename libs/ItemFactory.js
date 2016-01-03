@@ -31,7 +31,6 @@ exports.Factory.prototype.sitemapUrl = function () {
 };
 
 exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
-
     exports.Factory.prototype.traverseSitemap(jsonSitemap,this);
 
     var accessoryList = [];
@@ -54,17 +53,41 @@ exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
 };
 
 exports.Factory.prototype.traverseSitemap = function(jsonSitmap,factory) {
+
+    //initialize variables
+    var lastLabel="";
+
     for (var key in jsonSitmap) {
+
+        var name = "";
+        var label = "";
+        var type = "";
+        var state = "";
+        var link = "";
+        var item = undefined;
+
         if (jsonSitmap.hasOwnProperty(key)){
-            if (typeof(jsonSitmap[key].item) !== 'undefined'){
 
-                var name = jsonSitmap[key].item.name;
-                var label = (jsonSitmap[key].label.trim() === "") ? name : jsonSitmap[key].label;
-                var type = jsonSitmap[key].item.type;
-                var state = jsonSitmap[key].item.state;
-                var link = jsonSitmap[key].item.link;
+            if (key == "label"){
+                lastLabel = jsonSitmap[key];
+            }
 
-                var item = {
+            if (key == "item" && typeof(jsonSitmap[key].type) !== 'undefined'){
+                name = jsonSitmap[key].name;
+                label = (lastLabel.trim() === "") ? name : lastLabel;
+                type = jsonSitmap[key].type;
+                state = jsonSitmap[key].state;
+                link = jsonSitmap[key].link;
+            } else if (typeof(jsonSitmap[key].item) !== 'undefined'){
+                name = jsonSitmap[key].item.name;
+                label = (jsonSitmap[key].label.trim() === "") ? name : jsonSitmap[key].label;
+                type = jsonSitmap[key].item.type;
+                state = jsonSitmap[key].item.state;
+                link = jsonSitmap[key].item.link;
+            }
+
+            if (name !== ""){
+                item = {
                     name:name,
                     label:label,
                     type:type,
