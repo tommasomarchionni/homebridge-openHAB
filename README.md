@@ -1,7 +1,10 @@
-homebridge-openHAB
-=============
-[Homebridge](https://www.npmjs.com/package/homebridge) plugin for [openHAB](http://www.openhab.org).
+# homebridge-openHAB
 
+[![npm package](https://nodei.co/npm-dl/homebridge-openhab.png?months=2)](https://nodei.co/npm/homebridge-openhab/)
+
+[![Gitter](https://badges.gitter.im/tommasomarchionni/homebridge-openHAB.svg)](https://gitter.im/tommasomarchionni/homebridge-openHAB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+[Homebridge](https://www.npmjs.com/package/homebridge) plugin for [openHAB](http://www.openhab.org).
 
 ## Prerequisites
 * [openHAB](http://www.openhab.org)
