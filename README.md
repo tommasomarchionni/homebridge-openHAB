@@ -1,5 +1,7 @@
 homebridge-openHAB
 =============
+
+[![Join the chat at https://gitter.im/tommasomarchionni/homebridge-openHAB](https://badges.gitter.im/tommasomarchionni/homebridge-openHAB.svg)](https://gitter.im/tommasomarchionni/homebridge-openHAB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [Homebridge](https://www.npmjs.com/package/homebridge) plugin for [openHAB](http://www.openhab.org).
 
 
