@@ -20,6 +20,11 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.listener = undefined;
     this.ws = undefined;
 
+    if (platform.user && platform.password) {
+	this.url = this.url.replace('http://', 'http://' + encodeURIComponent(this.platform.user) + ":"
+				    + encodeURIComponent(this.platform.password) + "@");
+    }
+
     this.name = this.platform.useLabelForName ? this.label : this.widget.name;
 
     AbstractItem.super_.call(this, this.name, homebridge.hap.uuid.generate(String(this.widget.name)));
