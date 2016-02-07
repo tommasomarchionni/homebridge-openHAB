@@ -68,7 +68,7 @@ function OpenHABPlatform(log, config){
     this.log      = log;
     this.user     = config["user"];
     this.password = config["password"];
-    this.host   = config["host"];
+    this.host     = config["host"];
     this.port     = config["port"];
     this.protocol = "http";
     this.sitemap  = "demo";
