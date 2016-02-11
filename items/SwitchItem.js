@@ -32,7 +32,6 @@ SwitchItem.prototype.updateCharacteristics = function(message) {
 SwitchItem.prototype.getItemState = function(callback) {
 
     var self = this;
-    this.checkListener();
 
     this.log("iOS - request power state from " + this.name);
     request(this.url + '/state?type=json', function (error, response, body) {
@@ -48,7 +47,6 @@ SwitchItem.prototype.getItemState = function(callback) {
 SwitchItem.prototype.setItemState = function(value, callback) {
 
     var self = this;
-    this.checkListener();
 
     if (this.setInitialState) {
         this.setInitialState = false;

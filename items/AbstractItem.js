@@ -21,10 +21,8 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.ws = undefined;
 
     if (platform.user && platform.password) {
-	this.url = this.url.replace('http://', 'http://' + encodeURIComponent(this.platform.user) + ":"
-				    + encodeURIComponent(this.platform.password) + "@");
+        this.url = this.url.replace('http://', 'http://' + encodeURIComponent(this.platform.user) + ":" + encodeURIComponent(this.platform.password) + "@");
     }
-
     this.name = this.platform.useLabelForName ? this.label : this.widget.name;
 
     AbstractItem.super_.call(this, this.name, homebridge.hap.uuid.generate(String(this.widget.name)));
@@ -32,7 +30,7 @@ var AbstractItem = function(widget,platform,homebridge) {
 };
 
 AbstractItem.prototype.getServices = function() {
-    this.checkListener();
+    this.initListener();
     this.setInitialState = true;
     this.informationService = this.getInformationServices();
     this.otherService = this.getOtherServices();
@@ -54,13 +52,14 @@ AbstractItem.prototype.getInformationServices = function() {
     return informationService;
 };
 
-AbstractItem.prototype.checkListener = function() {
-
+AbstractItem.prototype.initListener = function() {
     if (typeof this.listener == 'undefined' || typeof this.ws == 'undefined') {
-        this.ws = undefined;
-        this.listener = new WSListener(this, this.updateCharacteristics.bind(this));
-        this.listener.startListener();
+        this.listener = this.listenerFactory(this.name,this.url,this.ws,this.log, this.updateCharacteristics.bind(this));
     }
+};
+
+AbstractItem.prototype.listenerFactory = function(itemName,itemUrl,ws,log,callback) {
+    return new WSListener(itemName,itemUrl,ws,log,callback.bind(this)).startListener();
 };
 
 module.exports = AbstractItem;

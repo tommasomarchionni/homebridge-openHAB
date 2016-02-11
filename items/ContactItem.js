@@ -35,8 +35,6 @@ ContactItem.prototype.updateCharacteristics = function(message) {
 ContactItem.prototype.getItemState = function(callback) {
 
     var self = this;
-    this.checkListener();
-
     this.log("iOS - request power state from " + this.name);
     request(this.url + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {

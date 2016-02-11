@@ -8,7 +8,7 @@ var DimmerItem = function(widget,platform,homebridge) {
 
 DimmerItem.prototype.getServices = function() {
 
-    this.checkListener();
+    this.initListener();
     this.setInitialState = true;
 
     this.informationService = this.getInformationServices();
@@ -57,7 +57,6 @@ DimmerItem.prototype.updateCharacteristics = function(message) {
 DimmerItem.prototype.getItemPowerState = function(callback) {
 
     var self = this;
-    this.checkListener();
 
     this.log("iOS - request power state from " + this.name);
     request(this.url + '/state?type=json', function (error, response, body) {
@@ -73,7 +72,6 @@ DimmerItem.prototype.getItemPowerState = function(callback) {
 DimmerItem.prototype.setItem = function(value, callback) {
 
     var self = this;
-    this.checkListener();
 
     if (this.setInitialState) {
         this.setInitialState = false;

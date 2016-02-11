@@ -2,40 +2,43 @@
 
 var WebSocket = require('ws');
 
-var WSListener = function(item, callback) {
-    this.item = item;
+var WSListener = function(itemName,itemUrl,ws,log,callback) {
+    this.itemName = itemName;
+    this.itemUrl = itemUrl;
+    this.log = log;
+    this.ws = ws;
     this.callback = callback;
 };
 
 WSListener.prototype.startListener = function () {
     var self = this;
 
-    if (typeof this.item.ws == 'undefined') {
-        this.item.ws = new WebSocket(this.item.url.replace('http:', 'ws:') + '/state?type=json');
+    if (typeof this.ws == 'undefined') {
+        this.ws = new WebSocket(this.itemUrl.replace('http:', 'ws:') + '/state?type=json');
     }
 
-    this.item.ws.on('open', function() {
-        self.item.log("OpenHAB WS - new connection for "+self.item.name);
+    this.ws.on('open', function() {
+        self.log("OpenHAB WS - new connection for "+self.itemName);
         self.runForever(15000);
     });
 
-    this.item.ws.on('message', function(message) {
-        self.item.log("OpenHAB WS - message from " +self.item.name+": "+ message);
+    this.ws.on('message', function(message) {
+        self.log("OpenHAB WS - message from " +self.itemName+": "+ message);
         self.callback(message);
     });
 
-    this.item.ws.on('close', function close() {
-        self.item.log("OpenHAB WS - closed connection for "+self.item.name);
-        self.item.listener = undefined;
-        self.item.ws = undefined;
+    this.ws.on('close', function close() {
+        self.log("OpenHAB WS - closed connection for "+self.itemName);
+        self.ws = undefined;
+        self = undefined;
     });
 };
 
 WSListener.prototype.runForever = function (interval) {
     var self = this;
     var intervalId = setInterval(function timeout() {
-        if (typeof self.item.ws !== 'undefined'){
-            self.item.ws.ping();
+        if (typeof self.ws !== 'undefined'){
+            self.ws.ping();
         } else {
             clearInterval(intervalId);
         }

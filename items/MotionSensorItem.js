@@ -28,7 +28,6 @@ MotionSensorItem.prototype.updateCharacteristics = function(message) {
 
 MotionSensorItem.prototype.getItemState = function(callback) {
     var self = this;
-    this.checkListener();
 
     this.log("iOS - request state from " + this.name);
     request(this.url + '/state?type=json', function (error, response, body) {

@@ -25,6 +25,9 @@
 // 17 December 2015 [tommasomarchionni]
 // - Added contact item
 //
+// 11 February 2016 [tommasomarchionni]
+// - Experimental support for Thermostat
+//
 // Rollershutter is tested with this binding in OpenHAB:
 // command=SWITCH_MULTILEVEL,invert_percent=true,invert_state=false"
 // When you attempt to add a device, it will ask for a "PIN code".
@@ -57,7 +60,8 @@ module.exports = function(homebridge) {
     Utility.addSupportTo(ItemFactory.NumberItem, ItemFactory.TemperatureSensorItem);
     Utility.addSupportTo(ItemFactory.ContactItem, ItemFactory.AbstractItem);
     Utility.addSupportTo(ItemFactory.MotionSensorItem, ItemFactory.ContactItem);
-    Utility.addSupportTo(ItemFactory.LightSensorItem, ItemFactory.TemperatureSensorItem);
+    Utility.addSupportTo(ItemFactory.LightSensorItem, ItemFactory.TemperatureSensorItem); //TODO ricontrollare
+    Utility.addSupportTo(ItemFactory.ThermostatItem, ItemFactory.AbstractItem);
 
     homebridge.registerPlatform("homebridge-openhab", "openHAB", OpenHABPlatform);
 };

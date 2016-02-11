@@ -12,7 +12,7 @@ var RollershutterItem = function(widget,platform,homebridge) {
 
 RollershutterItem.prototype.getServices = function() {
 
-    this.checkListener();
+    this.initListener();
 
     this.informationService = this.getInformationServices();
 
@@ -62,7 +62,6 @@ RollershutterItem.prototype.updateCharacteristics = function(message) {
 RollershutterItem.prototype.setItem = function(value, callback) {
 
     var self = this;
-    this.checkListener();
 
     if (this.setInitialState) {
         this.setInitialState = false;

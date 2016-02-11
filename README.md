@@ -14,12 +14,15 @@
 * Install the mdns and avahi library:
 
   `sudo apt-get install libnss-mdns libavahi-compat-libdnssd-dev`
+  
 * Install [homebridge](https://www.npmjs.com/package/homebridge):
 
   `npm install -g homebridge`
+  
 * This plugin is published through [NPM](https://www.npmjs.com/package/homebridge-openhab) and should be installed "globally" by typing:
  
   `npm install -g homebridge-openhab`
+  
 * Update your config.json file (usually is in your home/.homebridge/ directory, if you can't find, follow the instruction in [homebridge](https://www.npmjs.com/package/homebridge)). See config.json in this repository for a sample.
 
 ## Configuration (config.json)
@@ -35,7 +38,8 @@
     }
 ]
 ```
-Fields: 
+Fields:
+
 * "platform" - Must be set to openHAB
 * "name" - Name of openHAB server, default openHAB
 * "host" - IP address of the openHAB server
@@ -46,6 +50,7 @@ Fields:
 ## Advanced configuration (config.json)
 If you want set custom attributes to your openHAB's item you should add "customAttrs" attribute to your config.json file.
 In this section you can change these attributes:
+
 * "itemLabel" - you can set a different label,
 * "itemManufacturer" - you can set item's manufacter,
 * "itemModel" - you can set item's model,
@@ -53,11 +58,16 @@ In this section you can change these attributes:
 * "itemType" - you can have different type of switch item, number item, contact item, etc. Here you can define the type:
     * use "TemperatureSensorItem" for Temperature Sensor,
     * use "LightSensorItem" for Light Sensor,
+    * use "ThermostatItem" for Thermostat (experimental support),
     * use "FanItem" for Fan,
     * use "LightbulbItem" for Lightbulb,
     * use "OutletItem" for Outlet,
     * use "MotionSensorItem" for Motion Sensor.
-* "skipItem" - set to true if you want avoid to load the item in Homekit catalog, default is false.
+* "skipItem" - set to true if you want avoid to load the item in Homekit catalog, default is false,
+* "itemSubType" - use only with itemType=ThermostatItem, defines the type of openHAB item associated to ThermostatItem:
+    * use "CurrentTemperatureItem" for openHAB item with current temperature value,
+    * use "TargetTemperatureItem" for openHAB item with target temperature value.
+* "itemUniqueAggregationId" - use only with itemType=ThermostatItem, defines which item are associated with a Thermostat, use the same integer value for the same thermostat.
 
 Configuration sample:
 ```
@@ -116,7 +126,21 @@ Configuration sample:
                 "itemSerialNumber":"23456781",
                 "itemType": "TemperatureSensorItem",
                 "skipItem": false
-            }
+            },
+            {
+                "itemName":"living_room_ambient_temperature_c",
+                "itemLabel":"Termostat 1",
+                "itemType": "ThermostatItem"
+                "itemSubType":"CurrentTemperatureItem",
+                "itemUniqueAggregationId":1
+            },
+            {
+                "itemName":"living_room_target_temperature_c",
+                "itemLabel":"Termostat 1",
+                "itemType": "ThermostatItem"
+                "itemSubType":"TargetTemperatureItem",
+                "itemUniqueAggregationId":1
+            }            
         ]    
     }
 ]

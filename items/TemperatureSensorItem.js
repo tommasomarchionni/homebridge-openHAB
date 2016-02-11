@@ -33,7 +33,6 @@ TemperatureSensorItem.prototype.updateCharacteristics = function(message) {
 TemperatureSensorItem.prototype.getItemState = function(callback) {
 
     var self = this;
-    this.checkListener();
 
     this.log("iOS - request power state from " + this.name);
     request(this.url + '/state?type=json', function (error, response, body) {
