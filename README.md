@@ -65,8 +65,11 @@ In this section you can change these attributes:
     * use "MotionSensorItem" for Motion Sensor.
 * "skipItem" - set to true if you want avoid to load the item in Homekit catalog, default is false,
 * "itemSubType" - use only with itemType=ThermostatItem, defines the type of openHAB item associated to ThermostatItem:
-    * use "CurrentTemperatureItem" for openHAB item with current temperature value,
-    * use "TargetTemperatureItem" for openHAB item with target temperature value.
+    * use "CurrentTemperatureCItem" for openHAB item with current temperature value in Celsius,
+    * use "CurrentTemperatureFItem" for openHAB item with current temperature value in Fahrenheit,
+    * use "TargetTemperatureCItem" for openHAB item with target temperature value in Celsius,
+    * use "TargetTemperatureFItem" for openHAB item with target temperature value in Fahrenheit,
+    * use "CurrentRelativeHumidityItem" for openHAB item with humidity value.
 * "itemUniqueAggregationId" - use only with itemType=ThermostatItem, defines which item are associated with a Thermostat, use the same integer value for the same thermostat.
 
 Configuration sample:
@@ -130,18 +133,25 @@ Configuration sample:
             {
                 "itemName":"living_room_ambient_temperature_c",
                 "itemLabel":"Termostat 1",
-                "itemType": "ThermostatItem"
-                "itemSubType":"CurrentTemperatureItem",
+                "itemType": "ThermostatItem",
+                "itemSubType":"CurrentTemperatureCItem",
                 "itemUniqueAggregationId":1
             },
             {
                 "itemName":"living_room_target_temperature_c",
                 "itemLabel":"Termostat 1",
-                "itemType": "ThermostatItem"
-                "itemSubType":"TargetTemperatureItem",
+                "itemType": "ThermostatItem",
+                "itemSubType":"TargetTemperatureCItem",
                 "itemUniqueAggregationId":1
-            }            
-        ]    
+            },
+            {
+                "itemName":"living_room_humidity",
+                "itemLabel":"Termostat 1",
+                "itemType": "ThermostatItem",
+                "itemSubType":"CurrentRelativeHumidityItem",
+                "itemUniqueAggregationId":1
+            }
+        ]
     }
 ]
 ```

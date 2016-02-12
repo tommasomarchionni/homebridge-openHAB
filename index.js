@@ -28,6 +28,9 @@
 // 11 February 2016 [tommasomarchionni]
 // - Experimental support for Thermostat
 //
+// 12 February 2016 [tommasomarchionni]
+// - Added support for humidity in Thermostat
+//
 // Rollershutter is tested with this binding in OpenHAB:
 // command=SWITCH_MULTILEVEL,invert_percent=true,invert_state=false"
 // When you attempt to add a device, it will ask for a "PIN code".

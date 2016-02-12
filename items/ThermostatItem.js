@@ -5,6 +5,7 @@ const EventEmitter = require("events");
 
 var ThermostatItem = function(widget,platform,homebridge) {
     //General
+    this.temperatureDisplayUnits = homebridge.hap.Characteristic.TemperatureDisplayUnits.CELSIUS;
     this.thermostatItemEmitter = new EventEmitter();
     this.initEmitter();
 
@@ -12,6 +13,11 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.itemCurrentTemperature = undefined;
     this.listenerCurrentTemperature = undefined;
     this.wsCurrentTemperature = undefined;
+
+    //CurrentRelativeHumidity
+    this.itemCurrentRelativeHumidity = undefined;
+    this.listenerCurrentRelativeHumidity = undefined;
+    this.wsCurrentRelativeHumidity = undefined;
 
     //TargetTemperature
     this.itemTargetTemperature = undefined;
@@ -37,26 +43,72 @@ ThermostatItem.prototype.initListener = function() {
     if ((typeof this.itemCurrentTemperature) == 'undefined'){
         throw new Error(this.name + " needs CurrentTemperatureItem!");
     }
-    this.listenerCurrentTemperature = this.listenerFactory(this.itemCurrentTemperature.name,this.itemCurrentTemperature.link,this.wsCurrentTemperature,this.log, this.updateCurrentTemperature.bind(this));
+
+    this.listenerCurrentTemperature = this.listenerFactory(
+        this.itemCurrentTemperature.name,
+        this.itemCurrentTemperature.link,
+        this.wsCurrentTemperature,
+        this.log,
+        this.updateCurrentTemperature.bind(this)
+    );
+
     if ((typeof this.itemTargetTemperature) == 'undefined'){
         throw new Error(this.name + " needs TargetTemperatureItem!");
+    }
+
+    if ((typeof this.itemCurrentRelativeHumidity) !== 'undefined'){
+        this.listenerCurrentRelativeHumidity = this.listenerFactory(
+            this.itemCurrentRelativeHumidity.name,
+            this.itemCurrentRelativeHumidity.link,
+            this.wsCurrentRelativeHumidity,
+            this.log,
+            this.updateCurrentRelativeHumidity.bind(this)
+        );
     }
 };
 
 /**
- * Binding CurrentTemperatureItem from ItemFactory
+ * Binding CurrentTemperatureItem in Celsius from ItemFactory
  * @param item
  */
-ThermostatItem.prototype.setCurrentTemperatureItem = function(item){
+ThermostatItem.prototype.setCurrentTemperatureCItem = function(item){
     this.itemCurrentTemperature = item;
+    this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.CELSIUS;
 };
 
 /**
- * Binding TargetTemperatureItem from ItemFactory
+ * Binding CurrentTemperatureItem in Fahrenheit from ItemFactory
  * @param item
  */
-ThermostatItem.prototype.setTargetTemperatureItem = function(item){
+ThermostatItem.prototype.setCurrentTemperatureFItem = function(item){
+    this.itemCurrentTemperature = item;
+    this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.FAHRENHEIT;
+};
+
+/**
+ * Binding TargetTemperatureItem in Celsius from ItemFactory
+ * @param item
+ */
+ThermostatItem.prototype.setTargetTemperatureCItem = function(item){
     this.itemTargetTemperature = item;
+    this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.CELSIUS;
+};
+
+/**
+ * Binding TargetTemperatureItem in Fahrenheit from ItemFactory
+ * @param item
+ */
+ThermostatItem.prototype.setTargetTemperatureFItem = function(item){
+    this.itemTargetTemperature = item;
+    this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.FAHRENHEIT;
+};
+
+/**
+ * Binding CurrentRelativeHumidityItem from ItemFactory
+ * @param item
+ */
+ThermostatItem.prototype.setCurrentRelativeHumidityItem = function(item){
+    this.itemCurrentRelativeHumidity = item;
 };
 
 /**
@@ -86,14 +138,20 @@ ThermostatItem.prototype.getOtherServices = function() {
 
     //TODO
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.TemperatureDisplayUnits)
-        .on('get', this.getTemperatureDisplayUnitsMock.bind(this))
-        .setValue(0);
+        .on('get', this.getTemperatureDisplayUnits.bind(this))
+        .setValue(this.temperatureDisplayUnits);
 
     //TODO
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.TargetHeatingCoolingState)
         .on('set', this.setTargetHeatingCoolingStateMock.bind(this))
         .on('get', this.getTargetHeatingCoolingStateMock.bind(this))
         .setValue(1);
+
+    if (this.itemCurrentRelativeHumidity) {
+        otherService.addCharacteristic(this.homebridge.hap.Characteristic.CurrentRelativeHumidity)
+            .on('get', this.getCurrentRelativeHumidityState.bind(this))
+            .setValue(this.checkRelativeHumidityState(this.itemCurrentRelativeHumidity.state));
+    }
 
     return otherService;
 };
@@ -164,13 +222,11 @@ ThermostatItem.prototype.setTargetHeatingCoolingStateMock = function(value,callb
 };
 
 /**
- * TODO
+ * Get display unit from temperatureDisplayUnits
  * @param callback
  */
-ThermostatItem.prototype.getTemperatureDisplayUnitsMock = function(callback) {
-    //Characteristic.TemperatureDisplayUnits.CELSIUS = 0;
-    //Characteristic.TemperatureDisplayUnits.FAHRENHEIT = 1;
-    callback(undefined,this.homebridge.hap.Characteristic.TemperatureDisplayUnits.CELSIUS);
+ThermostatItem.prototype.getTemperatureDisplayUnits = function(callback) {
+    callback(undefined,this.temperatureDisplayUnits);
 };
 
 /**
@@ -197,6 +253,18 @@ ThermostatItem.prototype.checkTemperatureState = function(state) {
 };
 
 /**
+ * Parse relative humidity input value
+ * @param state
+ * @returns {number}
+ */
+ThermostatItem.prototype.checkRelativeHumidityState = function(state) {
+    if ('Unitialized' === state){
+        return 0;
+    }
+    return +state;
+};
+
+/**
  * Set CurrentTemperature from OpenHAB
  * @param message
  */
@@ -204,6 +272,33 @@ ThermostatItem.prototype.updateCurrentTemperature = function(message) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
         .setValue(this.checkTemperatureState(message));
+};
+
+/**
+ * Set CurrentRelativeHumidity from OpenHAB
+ * @param message
+ */
+ThermostatItem.prototype.updateCurrentRelativeHumidity = function(message) {
+    this.otherService
+        .addCharacteristic(this.homebridge.hap.Characteristic.CurrentRelativeHumidity)
+        .setValue(this.checkRelativeHumidityState(message));
+};
+
+/**
+ * Get CurrentRelativeHumidity requested from iOS
+ * @param callback
+ */
+ThermostatItem.prototype.getCurrentRelativeHumidityState = function(callback) {
+    var self = this;
+    this.log("iOS - request Current relative humidity state from " + this.itemCurrentRelativeHumidity.name + " (" + (self.name)+")");
+    request(self.itemCurrentRelativeHumidity.link + '/state?type=json', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            self.log("OpenHAB HTTP - response from " + self.itemCurrentRelativeHumidity.name + " (" + (self.name)+"): " + body);
+            callback(undefined,self.checkRelativeHumidityState(body));
+        } else {
+            self.log("OpenHAB HTTP - error from " + self.itemCurrentRelativeHumidity.name + " (" + (self.name)+"): " + error);
+        }
+    })
 };
 
 /**
