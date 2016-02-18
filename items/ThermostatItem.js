@@ -280,7 +280,7 @@ ThermostatItem.prototype.updateCurrentTemperature = function(message) {
  */
 ThermostatItem.prototype.updateCurrentRelativeHumidity = function(message) {
     this.otherService
-        .addCharacteristic(this.homebridge.hap.Characteristic.CurrentRelativeHumidity)
+        .getCharacteristic(this.homebridge.hap.Characteristic.CurrentRelativeHumidity)
         .setValue(this.checkRelativeHumidityState(message));
 };
 
