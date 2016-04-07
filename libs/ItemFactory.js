@@ -13,6 +13,7 @@ exports.ContactItem = require('../items/ContactItem.js');
 exports.MotionSensorItem = require('../items/MotionSensorItem.js');
 exports.LightSensorItem = require('../items/LightSensorItem.js');
 exports.ThermostatItem = require('../items/ThermostatItem.js');
+exports.GarageDoorOpenerItem = require('../items/GarageDoorOpenerItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
