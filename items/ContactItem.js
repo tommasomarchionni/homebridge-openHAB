@@ -19,7 +19,7 @@ ContactItem.prototype.getOtherServices = function() {
 ContactItem.prototype.checkItemState = function(state) {
     if ('Unitialized' === state){
         return this.homebridge.hap.Characteristic.ContactSensorState.CONTACT_NOT_DETECTED;
-    } else if ('CLOSED' === state){
+    } else if ('OPEN' === state){
         return this.homebridge.hap.Characteristic.ContactSensorState.CONTACT_NOT_DETECTED;
     } else {
         return this.homebridge.hap.Characteristic.ContactSensorState.CONTACT_DETECTED;
