@@ -76,7 +76,8 @@ In this section you can change these attributes:
     * use "FanItem" for Fan,
     * use "LightbulbItem" for Lightbulb,
     * use "OutletItem" for Outlet,
-    * use "MotionSensorItem" for Motion Sensor.
+    * use "MotionSensorItem" for Motion Sensor,
+    * use "ContactItem" for Contact Sensor.
 * "skipItem" - set to true if you want avoid to load the item in Homekit catalog, default is false,
 * "itemSubType" - use only with itemType=ThermostatItem, defines the type of openHAB item associated to ThermostatItem:
     * use "CurrentTemperatureCItem" for openHAB item with current temperature value in Celsius,
