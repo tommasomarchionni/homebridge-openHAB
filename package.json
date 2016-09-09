@@ -23,8 +23,8 @@
     "Siri"
   ],
   "dependencies": {
-    "ws": "^0.8.1",
-    "request": "^2.65.0"
+    "promise": "^7.1.1",
+    "semaphore": "^1.0.5",
   },
   "author": "tommasomarchionni",
   "license": "Apache-2.0",
