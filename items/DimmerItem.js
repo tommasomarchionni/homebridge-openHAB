@@ -121,8 +121,13 @@ DimmerItem.prototype.getOpenHabBrightnessState = function (callback) {
 };
 
 DimmerItem.prototype.setOpenHabPowerState = function (value, callback, context) {
-    //this.updateOpenHabState(value, "Power", callback, context);
-    callback();
+
+    if(value == false){
+        this.updateOpenHabState(value, "Power", callback, context);
+    }else {
+        callback();
+    }
+
 };
 
 DimmerItem.prototype.setOpenHabBrightnessState = function (value, callback, context) {
