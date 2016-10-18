@@ -13,6 +13,10 @@ var AbstractItem = function(widget,platform,homebridge) {
     this.log = this.platform.log;
     this.itemType=this.widget.itemType;
 
+    this.manufacturer = this.widget.manufacturer;
+    this.model = this.widget.model;
+    this.serialNumber = this.widget.serialNumber;
+
     this.setInitialState = false;
     this.setFromOpenHAB = false;
     this.informationService = undefined;

@@ -6,7 +6,7 @@ exports.LightbulbItem = require('../items/LightbulbItem.js');
 exports.FanItem = require('../items/FanItem.js');
 exports.OutletItem = require('../items/OutletItem.js');
 exports.DimmerItem = require('../items/DimmerItem.js');
-exports.RollershutterItem = require('../items/RollershutterItem.js');
+exports.RollershutterItem = require('../items/RollerShutterItem.js');
 exports.TemperatureSensorItem = require('../items/TemperatureSensorItem.js');
 exports.NumberItem = require('../items/NumberItem.js');
 exports.ContactItem = require('../items/ContactItem.js');
@@ -14,6 +14,7 @@ exports.MotionSensorItem = require('../items/MotionSensorItem.js');
 exports.LightSensorItem = require('../items/LightSensorItem.js');
 exports.ThermostatItem = require('../items/ThermostatItem.js');
 exports.GarageDoorOpenerItem = require('../items/GarageDoorOpenerItem.js');
+exports.ColorItem = require('../items/ColorItem.js');
 
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
