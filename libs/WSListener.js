@@ -27,9 +27,7 @@ WSListener.prototype.runForever = function (interval) {
     var self = this;
     var intervalId = setInterval(function timeout() {
         if (typeof self.ws !== 'undefined'){
-            //self.ws.ping();
 			request(self.ws, function (error, response, body) {
-				self.log("OpenHAB WS - response  " + body);
 			  if (!error && response.statusCode == 200) {
 				self.callback(body)
 			  }
