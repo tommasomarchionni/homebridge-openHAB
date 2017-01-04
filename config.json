@@ -18,7 +18,9 @@
       "host": "127.0.0.1",
       "port": "8080",
       "sitemap":"demo",
-      "useLabelForName": true
+      "useLabelForName": true,
+	  "rollerShutterReverseNumber" : true,
+	  "pollingInterval": 5000
     }
   ]
 }

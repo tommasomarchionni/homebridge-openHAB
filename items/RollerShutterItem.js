@@ -5,9 +5,17 @@ var request = require("request");
 var RollershutterItem = function(widget,platform,homebridge) {
     RollershutterItem.super_.call(this, widget,platform,homebridge);
     this.positionState = this.homebridge.hap.Characteristic.PositionState.STOPPED;
-    this.currentPosition = 100;
-    this.targetPosition = 100;
-    this.startedPosition = 100;
+    
+	if (this.platform.rollerShutterReverseNumber == false) {
+		this.currentPosition = 100;
+	    this.targetPosition = 100;
+	    this.startedPosition = 100;
+	} else {
+		this.currentPosition = 100 - parseInt(this.state);
+	    this.targetPosition = 100 - parseInt(this.state);
+	    this.startedPosition = 100 - parseInt(this.state);
+	}
+	
 };
 
 RollershutterItem.prototype.getServices = function() {
@@ -37,6 +45,11 @@ RollershutterItem.prototype.getServices = function() {
 };
 
 RollershutterItem.prototype.updateCharacteristics = function(message) {
+	
+	if (this.platform.rollerShutterReverseNumber == true) {
+		message = 100 - parseInt(message);
+	}
+	
 
     if (parseInt(message) == this.targetPosition) {
         var ps = this.homebridge.hap.Characteristic.PositionState.STOPPED;
@@ -77,7 +90,11 @@ RollershutterItem.prototype.setItem = function(value, callback) {
     if (typeof value === 'boolean') {
         command = value ? '100' : '0';
     } else {
-        command = "" + value;
+		if (this.platform.rollerShutterReverseNumber == true) {
+			command = "" + (100 - value);
+		} else {
+			command = "" + value;
+		}
     }
     request.post(
         this.url,
@@ -86,7 +103,7 @@ RollershutterItem.prototype.setItem = function(value, callback) {
             headers: {'Content-Type': 'text/plain'}
         },
         function (error, response, body) {
-            if (!error && response.statusCode == 201) {
+            if (!error && response.statusCode == 200) {
                 self.log("OpenHAB HTTP - response from " + self.name + ": " + body);
                 self.targetPosition = parseInt(value);
             } else {
@@ -115,9 +132,12 @@ RollershutterItem.prototype.getItemCurrentPosition = function(callback) {
 
     request(this.url + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-
+			if (this.platform.rollerShutterReverseNumber == true) {
+				self.currentPosition = 100 -parseInt(body);
+			} else {
+				self.currentPosition = parseInt(body);
+			}
             self.log("OpenHAB HTTP - response from " + self.name + ": " +body);
-            self.currentPosition = parseInt(body);
             callback(undefined,parseInt(body));
 
         } else {

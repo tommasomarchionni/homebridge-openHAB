@@ -92,6 +92,19 @@ function OpenHABPlatform(log, config){
     } else {
         this.customAttrs = [];
     }
+	if (typeof config["rollerShutterReverseNumber"] != 'undefined') {
+        this.rollerShutterReverseNumber = config["rollerShutterReverseNumber"];
+    } else {
+        this.rollerShutterReverseNumber = false;
+    }
+
+	if (typeof config["pollingInterval"] != 'undefined') {
+        this.pollingInterval = config["pollingInterval"];
+    } else {
+        this.pollingInterval = 5000;
+    }
+
+	
 }
 
 OpenHABPlatform.prototype.accessories = function(callback) {
