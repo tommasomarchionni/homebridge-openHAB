@@ -132,13 +132,13 @@ RollershutterItem.prototype.getItemCurrentPosition = function(callback) {
 
     request(this.url + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-			if (this.platform.rollerShutterReverseNumber == true) {
+			if (self.platform.rollerShutterReverseNumber == true) {
 				self.currentPosition = 100 -parseInt(body);
 			} else {
 				self.currentPosition = parseInt(body);
 			}
             self.log("OpenHAB HTTP - response from " + self.name + ": " +body);
-            callback(undefined,parseInt(body));
+            callback(undefined,self.currentPosition);
 
         } else {
             self.log("OpenHAB HTTP - error from " + self.name + ": " + error);
