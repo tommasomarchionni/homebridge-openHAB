@@ -126,22 +126,22 @@ ColorItem.prototype.getOpenHabColorState = function () {
 
     return new Promise(function (resolve, reject) {
 
-            request.get(
-                this.url + '/state',
-                function (error, response, body) {
-                    if (!error && response.statusCode === 200) {
+        request.get(
+            this.url + '/state',
+            function (error, response, body) {
+                if (!error && response.statusCode === 200) {
 
-                        this.log("OpenHAB HTTP GET <" + this.name + "> - " + body);
-                        var state = this.parseState(body);
-                        resolve(state);
+                    this.log("OpenHAB HTTP GET <" + this.name + "> - " + body);
+                    var state = this.parseState(body);
+                    resolve(state);
 
-                    } else {
-                        this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
-                        reject(error);
-                    }
-                }.bind(this)
-            )
-        }.bind(this)
+                } else {
+                    this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
+                    reject(error);
+                }
+            }.bind(this)
+        )
+    }.bind(this)
     );
 };
 
@@ -154,23 +154,23 @@ ColorItem.prototype.setOpenHabColorState = function (data) {
 
     return new Promise(function (resolve, reject) {
 
-            request.post(
-                this.url,
-                {
-                    body: data,
-                    headers: {'Content-Type': 'text/plain'}
-                },
-                function (error, response, body) {
-                    if (!error && response.statusCode == 201) {
-                        this.log("OpenHAB HTTP RESP <" + this.name + "> - " + "OK");
-                        resolve(body);
-                    } else {
-                        this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
-                        reject(error);
-                    }
-                }.bind(this)
-            );
-        }.bind(this)
+        request.post(
+            this.url,
+            {
+                body: data,
+                headers: { 'Content-Type': 'text/plain' }
+            },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    this.log("OpenHAB HTTP RESP <" + this.name + "> - " + "OK");
+                    resolve(body);
+                } else {
+                    this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
+                    reject(error);
+                }
+            }.bind(this)
+        );
+    }.bind(this)
     );
 };
 
@@ -183,23 +183,23 @@ ColorItem.prototype.setOpenHabPowerSwitchState = function (data) {
 
     return new Promise(function (resolve, reject) {
 
-            request.post(
-                this.url,
-                {
-                    body: data,
-                    headers: {'Content-Type': 'text/plain'}
-                },
-                function (error, response, body) {
-                    if (!error && response.statusCode == 201) {
-                        this.log("OpenHAB HTTP RESP <" + this.name + "> - " + "OK");
-                        resolve(body);
-                    } else {
-                        this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
-                        reject(error);
-                    }
-                }.bind(this)
-            );
-        }.bind(this)
+        request.post(
+            this.url,
+            {
+                body: data,
+                headers: { 'Content-Type': 'text/plain' }
+            },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    this.log("OpenHAB HTTP RESP <" + this.name + "> - " + "OK");
+                    resolve(body);
+                } else {
+                    this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
+                    reject(error);
+                }
+            }.bind(this)
+        );
+    }.bind(this)
     );
 };
 

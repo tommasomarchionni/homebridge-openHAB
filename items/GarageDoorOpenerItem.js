@@ -2,7 +2,7 @@
 
 var request = require("request");
 
-var GarageDoorOpenerItem = function(widget,platform,homebridge) {
+var GarageDoorOpenerItem = function (widget, platform, homebridge) {
 
     // Current door State
     this.itemCurrentDoorState = undefined;
@@ -22,14 +22,14 @@ var GarageDoorOpenerItem = function(widget,platform,homebridge) {
     this.setFromOpenHAB = false;
     this.setInitialState = true;
 
-    GarageDoorOpenerItem.super_.call(this, widget,platform,homebridge);
+    GarageDoorOpenerItem.super_.call(this, widget, platform, homebridge);
 };
 
 /**
  * Binding CurrentDoorStateItem
  * @param item
  */
-GarageDoorOpenerItem.prototype.setCurrentDoorStateItem = function(item){
+GarageDoorOpenerItem.prototype.setCurrentDoorStateItem = function (item) {
     this.itemCurrentDoorState = item;
 };
 
@@ -37,7 +37,7 @@ GarageDoorOpenerItem.prototype.setCurrentDoorStateItem = function(item){
  * Binding TargetDoorStateItem
  * @param item
  */
-GarageDoorOpenerItem.prototype.setTargetDoorStateItem = function(item){
+GarageDoorOpenerItem.prototype.setTargetDoorStateItem = function (item) {
     this.itemTargetDoorState = item;
 };
 
@@ -45,19 +45,19 @@ GarageDoorOpenerItem.prototype.setTargetDoorStateItem = function(item){
  * Binding ObstructionDetectedItem
  * @param item
  */
-GarageDoorOpenerItem.prototype.setObstructionDetectedItem = function(item){
+GarageDoorOpenerItem.prototype.setObstructionDetectedItem = function (item) {
     this.itemObstructionDetectedState = item;
 };
 
 /**
  * Init all thermostat listener
  */
-GarageDoorOpenerItem.prototype.initListener = function() {
-    if ((typeof this.itemCurrentDoorState) == 'undefined'){
+GarageDoorOpenerItem.prototype.initListener = function () {
+    if ((typeof this.itemCurrentDoorState) == 'undefined') {
         throw new Error(this.name + " needs CurrentDoorState!");
     }
 
-    if ((typeof this.itemTargetDoorState) == 'undefined'){
+    if ((typeof this.itemTargetDoorState) == 'undefined') {
         throw new Error(this.name + " needs TargetDoorState!");
     }
 
@@ -77,7 +77,7 @@ GarageDoorOpenerItem.prototype.initListener = function() {
         this.updateTargetDoorState.bind(this)
     );
 
-    if ((typeof this.itemObstructionDetectedState) !== 'undefined'){
+    if ((typeof this.itemObstructionDetectedState) !== 'undefined') {
         this.listenerObstructionDetectedState = this.listenerFactory(
             this.itemObstructionDetectedState.name,
             this.itemObstructionDetectedState.link,
@@ -88,7 +88,7 @@ GarageDoorOpenerItem.prototype.initListener = function() {
     }
 };
 
-GarageDoorOpenerItem.prototype.getOtherServices = function() {
+GarageDoorOpenerItem.prototype.getOtherServices = function () {
     var otherService = new this.homebridge.hap.Service.GarageDoorOpener();
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.CurrentDoorState)
@@ -102,14 +102,14 @@ GarageDoorOpenerItem.prototype.getOtherServices = function() {
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.ObstructionDetected)
         .on('get', this.getObstructionDetected.bind(this))
-        .setValue((typeof this.itemObstructionDetectedState) !== 'undefined' && 
-                  this.itemObstructionDetectedState.state === 'ON');
+        .setValue((typeof this.itemObstructionDetectedState) !== 'undefined' &&
+        this.itemObstructionDetectedState.state === 'ON');
 
     return otherService;
 };
 
-GarageDoorOpenerItem.prototype.checkCurrentDoorState = function(state) {
-    switch (state){
+GarageDoorOpenerItem.prototype.checkCurrentDoorState = function (state) {
+    switch (state) {
         case 'OPEN':
             return this.homebridge.hap.Characteristic.CurrentDoorState.OPEN;
         case 'CLOSED':
@@ -124,8 +124,8 @@ GarageDoorOpenerItem.prototype.checkCurrentDoorState = function(state) {
     }
 };
 
-GarageDoorOpenerItem.prototype.checkTargetDoorState = function(state) {
-    switch (state){
+GarageDoorOpenerItem.prototype.checkTargetDoorState = function (state) {
+    switch (state) {
         case 'OPEN':
             return this.homebridge.hap.Characteristic.TargetDoorState.OPEN;
         case 'CLOSE':
@@ -138,15 +138,15 @@ GarageDoorOpenerItem.prototype.checkTargetDoorState = function(state) {
  * Get CurrentDoorState requested from iOS
  * @param callback
  */
-GarageDoorOpenerItem.prototype.getCurrentDoorState = function(callback) {
+GarageDoorOpenerItem.prototype.getCurrentDoorState = function (callback) {
     var self = this;
-    this.log("iOS - request current door state state from " + this.itemCurrentDoorState.name + " (" + (self.name)+")");
+    this.log("iOS - request current door state state from " + this.itemCurrentDoorState.name + " (" + (self.name) + ")");
     request(self.itemCurrentDoorState.link + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            self.log("OpenHAB HTTP - response from " + self.itemCurrentDoorState.name + " (" + (self.name)+"): " + body);
-            callback(undefined,self.checkCurrentDoorState(body));
+            self.log("OpenHAB HTTP - response from " + self.itemCurrentDoorState.name + " (" + (self.name) + "): " + body);
+            callback(undefined, self.checkCurrentDoorState(body));
         } else {
-            self.log("OpenHAB HTTP - error from " + self.itemCurrentDoorState.name + " (" + (self.name)+"): " + error);
+            self.log("OpenHAB HTTP - error from " + self.itemCurrentDoorState.name + " (" + (self.name) + "): " + error);
         }
     })
 };
@@ -155,15 +155,15 @@ GarageDoorOpenerItem.prototype.getCurrentDoorState = function(callback) {
  * Get TargetDoorState requested from iOS
  * @param callback
  */
-GarageDoorOpenerItem.prototype.getTargetDoorState = function(callback) {
+GarageDoorOpenerItem.prototype.getTargetDoorState = function (callback) {
     var self = this;
-    this.log("iOS - request target door state state from " + this.itemTargetDoorState.name + " (" + (self.name)+")");
+    this.log("iOS - request target door state state from " + this.itemTargetDoorState.name + " (" + (self.name) + ")");
     request(self.itemTargetDoorState.link + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            self.log("OpenHAB HTTP - response from " + self.itemTargetDoorState.name + " (" + (self.name)+"): " + body);
-            callback(undefined,self.checkTargetDoorState(body));
+            self.log("OpenHAB HTTP - response from " + self.itemTargetDoorState.name + " (" + (self.name) + "): " + body);
+            callback(undefined, self.checkTargetDoorState(body));
         } else {
-            self.log("OpenHAB HTTP - error from " + self.itemTargetDoorState.name + " (" + (self.name)+"): " + error);
+            self.log("OpenHAB HTTP - error from " + self.itemTargetDoorState.name + " (" + (self.name) + "): " + error);
         }
     })
 };
@@ -172,22 +172,21 @@ GarageDoorOpenerItem.prototype.getTargetDoorState = function(callback) {
  * Get ObstructionDetected requested from iOS
  * @param callback
  */
-GarageDoorOpenerItem.prototype.getObstructionDetected = function(callback) {
+GarageDoorOpenerItem.prototype.getObstructionDetected = function (callback) {
     var self = this;
 
-    if ((typeof self.itemObstructionDetectedState) === 'undefined')
-    {
+    if ((typeof self.itemObstructionDetectedState) === 'undefined') {
         callback(undefined, false);
         return;
     }
 
-    this.log("iOS - request target door state state from " + this.itemObstructionDetectedState.name + " (" + (self.name)+")");
+    this.log("iOS - request target door state state from " + this.itemObstructionDetectedState.name + " (" + (self.name) + ")");
     request(self.itemObstructionDetectedState.link + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            self.log("OpenHAB HTTP - response from " + self.itemObstructionDetectedState.name + " (" + (self.name)+"): " + body);
-            callback(undefined,body === "ON");
+            self.log("OpenHAB HTTP - response from " + self.itemObstructionDetectedState.name + " (" + (self.name) + "): " + body);
+            callback(undefined, body === "ON");
         } else {
-            self.log("OpenHAB HTTP - error from " + self.itemObstructionDetectedState.name + " (" + (self.name)+"): " + error);
+            self.log("OpenHAB HTTP - error from " + self.itemObstructionDetectedState.name + " (" + (self.name) + "): " + error);
         }
     })
 };
@@ -196,7 +195,7 @@ GarageDoorOpenerItem.prototype.getObstructionDetected = function(callback) {
  * Set CurrentDoorState from OpenHAB
  * @param message
  */
-GarageDoorOpenerItem.prototype.updateCurrentDoorState = function(message) {
+GarageDoorOpenerItem.prototype.updateCurrentDoorState = function (message) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CurrentDoorState)
         .setValue(this.checkCurrentDoorState(message));
@@ -206,14 +205,14 @@ GarageDoorOpenerItem.prototype.updateCurrentDoorState = function(message) {
  * Set TargetDoorState from OpenHAB
  * @param message
  */
-GarageDoorOpenerItem.prototype.updateTargetDoorState = function(message) {
+GarageDoorOpenerItem.prototype.updateTargetDoorState = function (message) {
     this.setFromOpenHAB = true;
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.TargetDoorState)
         .setValue(this.checkTargetDoorState(message),
-            function() {
-                this.setFromOpenHAB = false;
-            }.bind(this)
+        function () {
+            this.setFromOpenHAB = false;
+        }.bind(this)
         );
 };
 
@@ -221,7 +220,7 @@ GarageDoorOpenerItem.prototype.updateTargetDoorState = function(message) {
  * Set ObstructionDetected from OpenHAB
  * @param message
  */
-GarageDoorOpenerItem.prototype.updateObstructionDetectedState = function(message) {
+GarageDoorOpenerItem.prototype.updateObstructionDetectedState = function (message) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.ObstructionDetected)
         .setValue(message === 'ON');
@@ -232,7 +231,7 @@ GarageDoorOpenerItem.prototype.updateObstructionDetectedState = function(message
  * @param value
  * @param callback
  */
-GarageDoorOpenerItem.prototype.setTargetDoorState = function(value, callback){
+GarageDoorOpenerItem.prototype.setTargetDoorState = function (value, callback) {
     var self = this;
 
     if (this.setInitialState) {
@@ -250,12 +249,12 @@ GarageDoorOpenerItem.prototype.setTargetDoorState = function(value, callback){
     var command = value === this.homebridge.hap.Characteristic.TargetDoorState.OPEN ? 'ON' : 'OFF';
     request.post(
         this.itemTargetDoorState.link,
-        { 
+        {
             body: command,
-            headers: {'Content-Type': 'text/plain'}
+            headers: { 'Content-Type': 'text/plain' }
         },
         function (error, response, body) {
-            if (!error && response.statusCode == 201) {
+            if (!error && response.statusCode == 200) {
                 self.log("OpenHAB HTTP - response from " + self.itemTargetDoorState.name + ": " + body);
             } else {
                 self.log("OpenHAB HTTP - error from " + self.itemTargetDoorState.name + ": " + error);
