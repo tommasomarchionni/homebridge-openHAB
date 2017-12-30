@@ -47,7 +47,8 @@
       "host": "192.168.0.100",
       "port": "8080",
       "sitemap": "demo",
-      "useLabelForName": true
+      "useLabelForName": true,
+      "polling": 5000
     }
   ]
 }
@@ -60,6 +61,7 @@ Fields:
 * "port" - Port of the openHAB server
 * "sitemap" - Sitemap name of your openHAB server
 * "useLabelForName" - true if you want use item's label in the name field of HomeKit, useful if you want to use Siri. If you set this attribute to true it's important that you have unique label in your sitemap.
+* "polling" - the time interval in with to check for changes from *openHAB* in milliseconds (optional, defaults to 5000).
 
 ## Advanced configuration (config.json)
 If you want set custom attributes to your openHAB's item you should add "customAttrs" attribute to your config.json file.

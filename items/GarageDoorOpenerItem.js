@@ -255,7 +255,7 @@ GarageDoorOpenerItem.prototype.setTargetDoorState = function(value, callback){
             headers: {'Content-Type': 'text/plain'}
         },
         function (error, response, body) {
-            if (!error && response.statusCode == 201) {
+            if (!error && response.statusCode == 200) {
                 self.log("OpenHAB HTTP - response from " + self.itemTargetDoorState.name + ": " + body);
             } else {
                 self.log("OpenHAB HTTP - error from " + self.itemTargetDoorState.name + ": " + error);

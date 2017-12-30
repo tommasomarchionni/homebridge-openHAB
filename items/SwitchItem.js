@@ -65,7 +65,7 @@ SwitchItem.prototype.setItemState = function(value, callback) {
         this.url,
         { body: command },
         function (error, response, body) {
-            if (!error && response.statusCode == 201) {
+            if (!error && response.statusCode == 200) {
                 self.log("OpenHAB HTTP - response from " + self.name + ": " + body);
             } else {
                 self.log("OpenHAB HTTP - error from " + self.name + ": " + error);
