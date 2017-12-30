@@ -161,7 +161,7 @@ ColorItem.prototype.setOpenHabColorState = function (data) {
                     headers: {'Content-Type': 'text/plain'}
                 },
                 function (error, response, body) {
-                    if (!error && response.statusCode == 201) {
+                    if (!error && response.statusCode == 200) {
                         this.log("OpenHAB HTTP RESP <" + this.name + "> - " + "OK");
                         resolve(body);
                     } else {
@@ -190,7 +190,7 @@ ColorItem.prototype.setOpenHabPowerSwitchState = function (data) {
                     headers: {'Content-Type': 'text/plain'}
                 },
                 function (error, response, body) {
-                    if (!error && response.statusCode == 201) {
+                    if (!error && response.statusCode == 200) {
                         this.log("OpenHAB HTTP RESP <" + this.name + "> - " + "OK");
                         resolve(body);
                     } else {
