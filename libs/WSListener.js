@@ -1,6 +1,4 @@
 "use strict";
-
-//var WebSocket = require('ws');
 var request = require('request');
 
 var WSListener = function(itemName,itemUrl,ws,log,plattform,callback) {
@@ -14,13 +12,10 @@ var WSListener = function(itemName,itemUrl,ws,log,plattform,callback) {
 
 WSListener.prototype.startListener = function () {
     var self = this;
-	
     if (typeof this.ws == 'undefined') {
-        //this.ws = new WebSocket(this.itemUrl.replace('http:', 'ws:') + '/state?type=json');		
 		this.ws = this.itemUrl + '/state?type=json';		
     }
 	self.runForever(this.plattform.pollingInterval);
-
 };
 
 WSListener.prototype.runForever = function (interval) {
