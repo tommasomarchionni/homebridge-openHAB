@@ -2,11 +2,11 @@
 
 var request = require("request");
 
-var SwitchItem = function (widget, platform, homebridge) {
-    SwitchItem.super_.call(this, widget, platform, homebridge);
+var SwitchItem = function(widget,platform,homebridge) {
+    SwitchItem.super_.call(this, widget,platform,homebridge);
 };
 
-SwitchItem.prototype.getOtherServices = function () {
+SwitchItem.prototype.getOtherServices = function() {
     var otherService = new this.homebridge.hap.Service.Switch();
 
     otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
@@ -17,19 +17,19 @@ SwitchItem.prototype.getOtherServices = function () {
     return otherService;
 };
 
-SwitchItem.prototype.updateCharacteristics = function (message) {
+SwitchItem.prototype.updateCharacteristics = function(message) {
 
     this.setFromOpenHAB = true;
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.On)
         .setValue(message === 'ON',
-        function () {
-            this.setFromOpenHAB = false;
-        }.bind(this)
+            function() {
+                this.setFromOpenHAB = false;
+            }.bind(this)
         );
 };
 
-SwitchItem.prototype.getItemState = function (callback) {
+SwitchItem.prototype.getItemState = function(callback) {
 
     var self = this;
 
@@ -37,14 +37,14 @@ SwitchItem.prototype.getItemState = function (callback) {
     request(this.url + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             self.log("OpenHAB HTTP - response from " + self.name + ": " + body);
-            callback(undefined, body === "ON");
+            callback(undefined,body === "ON");
         } else {
             self.log("OpenHAB HTTP - error from " + self.name + ": " + error);
         }
     })
 };
 
-SwitchItem.prototype.setItemState = function (value, callback) {
+SwitchItem.prototype.setItemState = function(value, callback) {
 
     var self = this;
 
