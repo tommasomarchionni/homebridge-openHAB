@@ -63,7 +63,7 @@ AbstractItem.prototype.initListener = function() {
 };
 
 AbstractItem.prototype.listenerFactory = function(itemName,itemUrl,ws,log,callback) {
-    return new WSListener(itemName,itemUrl,ws,log,this.platform,callback.bind(this)).startListener();
+    return new WSListener(itemName,itemUrl,ws,log,callback.bind(this)).startListener();
 };
 
 module.exports = AbstractItem;
