@@ -1,6 +1,5 @@
 # homebridge-openHAB
 
-> This is a fork from [tommasomarchionni](https://github.com/tommasomarchionni/homebridge-openHAB)'s homebridge plugin. It was originally update by [philklei](https://github.com/philklei/homebridge-openHAB) to work with [openHAB2](http://www.openhab.org). I made some minor changes to make it work with openHAB 2.2. I intent to add some more documentation and then add a PR to the orignal repo.
 [![npm package](https://nodei.co/npm-dl/homebridge-openhab.png?months=2)](https://nodei.co/npm/homebridge-openhab/)
 
 [![Gitter](https://badges.gitter.im/tommasomarchionni/homebridge-openHAB.svg)](https://gitter.im/tommasomarchionni/homebridge-openHAB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
