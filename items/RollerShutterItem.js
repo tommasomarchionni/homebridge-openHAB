@@ -5,17 +5,9 @@ var request = require("request");
 var RollershutterItem = function(widget,platform,homebridge) {
     RollershutterItem.super_.call(this, widget,platform,homebridge);
     this.positionState = this.homebridge.hap.Characteristic.PositionState.STOPPED;
-    
-	if (this.platform.rollerShutterReverseNumber == false) {
-		this.currentPosition = 100;
-	    this.targetPosition = 100;
-	    this.startedPosition = 100;
-	} else {
-		this.currentPosition = 100 - parseInt(this.state);
-	    this.targetPosition = 100 - parseInt(this.state);
-	    this.startedPosition = 100 - parseInt(this.state);
-	}
-	
+    this.currentPosition = 100;
+    this.targetPosition = 100;
+    this.startedPosition = 100;
 };
 
 RollershutterItem.prototype.getServices = function() {
@@ -45,11 +37,6 @@ RollershutterItem.prototype.getServices = function() {
 };
 
 RollershutterItem.prototype.updateCharacteristics = function(message) {
-	
-	if (this.platform.rollerShutterReverseNumber == true) {
-		message = 100 - parseInt(message);
-	}
-	
 
     if (parseInt(message) == this.targetPosition) {
         var ps = this.homebridge.hap.Characteristic.PositionState.STOPPED;
@@ -90,11 +77,7 @@ RollershutterItem.prototype.setItem = function(value, callback) {
     if (typeof value === 'boolean') {
         command = value ? '100' : '0';
     } else {
-		if (this.platform.rollerShutterReverseNumber == true) {
-			command = "" + (100 - value);
-		} else {
-			command = "" + value;
-		}
+        command = "" + value;
     }
     request.post(
         this.url,
@@ -132,13 +115,10 @@ RollershutterItem.prototype.getItemCurrentPosition = function(callback) {
 
     request(this.url + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-			if (self.platform.rollerShutterReverseNumber == true) {
-				self.currentPosition = 100 -parseInt(body);
-			} else {
-				self.currentPosition = parseInt(body);
-			}
+
             self.log("OpenHAB HTTP - response from " + self.name + ": " +body);
-            callback(undefined,self.currentPosition);
+            self.currentPosition = parseInt(body);
+            callback(undefined,parseInt(body));
 
         } else {
             self.log("OpenHAB HTTP - error from " + self.name + ": " + error);

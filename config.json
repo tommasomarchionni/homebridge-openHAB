@@ -19,8 +19,7 @@
       "port": "8080",
       "sitemap":"demo",
       "useLabelForName": true,
-	  "rollerShutterReverseNumber" : true,
-	  "pollingInterval": 5000
+	    "pollingInterval": 5000
     }
   ]
 }
