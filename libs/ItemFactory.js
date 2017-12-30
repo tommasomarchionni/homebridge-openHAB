@@ -16,6 +16,7 @@ exports.ThermostatItem = require('../items/ThermostatItem.js');
 exports.GarageDoorOpenerItem = require('../items/GarageDoorOpenerItem.js');
 exports.ColorItem = require('../items/ColorItem.js');
 
+
 exports.Factory = function(OpenHABPlatform,homebridge) {
     this.platform = OpenHABPlatform;
     this.log = this.platform.log;
@@ -42,6 +43,7 @@ exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
         if (this.itemList.hasOwnProperty(key)){
 
             this.itemList[key] = exports.Factory.prototype.checkCustomAttrs(this.itemList[key],this.platform);
+
             if (!(this.itemList[key].itemType in exports)){
                 this.log("Platform - The widget '" + this.itemList[key].label + "' of type "+this.itemList[key].type+" is an item not handled.");
                 continue;
@@ -63,7 +65,7 @@ exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
 
             var accessory = new exports[this.itemList[key].itemType](this.itemList[key], this.platform, this.homebridge);
             this.log("Platform - Accessory Found: " + this.itemList[key].label);
-
+			
             if (typeof this.itemList[key].itemUniqueAggregationId !== 'undefined') {
                 this.uniqueIds[this.itemList[key].itemUniqueAggregationId] = accessory;
                 this.log("Platform - New attribute found for " + this.itemList[key].label);
@@ -79,7 +81,7 @@ exports.Factory.prototype.parseSitemap = function (jsonSitemap) {
 exports.Factory.prototype.checkCustomAttrs = function(widget,platform) {
     widget.manufacturer = "OpenHAB";
     widget.model = widget.type;
-    widget.itemType = widget.type;
+    widget.itemType = widget.type + "Item";
     widget.serialNumber = widget.name;
     widget.skipItem = false;
 
@@ -119,24 +121,29 @@ exports.Factory.prototype.checkCustomAttrs = function(widget,platform) {
 };
 
 exports.Factory.prototype.traverseSitemap = function(jsonSitmap,factory) {
-
+	
     //initialize variables
     var lastLabel="";
-
+	var lastTitle="";
+	
     for (var key in jsonSitmap) {
-
+		
         var name = "";
         var label = "";
         var type = "";
         var state = "";
         var link = "";
         var item = undefined;
-
+		
         if (jsonSitmap.hasOwnProperty(key)){
-
             if (key == "label"){
                 lastLabel = jsonSitmap[key];
             }
+			if (key == "title") {
+				lastTitle = jsonSitmap[key];
+			} else if(typeof(jsonSitmap[key].title) !== 'undefined') {
+				lastTitle = jsonSitmap[key].title;
+			}
 
             if (key == "item" && typeof(jsonSitmap[key].type) !== 'undefined'){
                 name = jsonSitmap[key].name;
@@ -144,12 +151,14 @@ exports.Factory.prototype.traverseSitemap = function(jsonSitmap,factory) {
                 type = jsonSitmap[key].type;
                 state = jsonSitmap[key].state;
                 link = jsonSitmap[key].link;
+				
             } else if (typeof(jsonSitmap[key].item) !== 'undefined'){
                 name = jsonSitmap[key].item.name;
                 label = (jsonSitmap[key].label.trim() === "") ? name : jsonSitmap[key].label;
                 type = jsonSitmap[key].item.type;
                 state = jsonSitmap[key].item.state;
                 link = jsonSitmap[key].item.link;
+				label = label+jsonSitmap[key].widgetId;
             }
 
             if (name !== ""){
@@ -164,16 +173,26 @@ exports.Factory.prototype.traverseSitemap = function(jsonSitmap,factory) {
                 //avoid duplicate items
                 if (!(name in factory.itemList)) factory.itemList[name] = item;
             }
+			
+            if ((typeof(jsonSitmap[key].widgets) !== 'undefined') || key === 'widgets'){
+                
+				if (typeof(jsonSitmap[key].widgets) !== 'undefined'){
+                    exports.Factory.prototype.traverseSitemap(jsonSitmap[key].widgets,factory);
+                } else if(key === 'widgets')  {
+                    exports.Factory.prototype.traverseSitemap(jsonSitmap[key],factory);
+				}
+            }
 
-            if ((typeof(jsonSitmap[key].widget) !== 'undefined') || (typeof(jsonSitmap[key].linkedPage) !== 'undefined') || key === 'widget'){
-                if (typeof(jsonSitmap[key].widget) !== 'undefined'){
-                    exports.Factory.prototype.traverseSitemap(jsonSitmap[key].widget,factory);
-                } else if(key === 'widget')  {
+			if ((typeof(jsonSitmap[key].linkedPage) !== 'undefined') || key === 'linkedPage'){
+				
+				if(key === 'linkedPage')  {
                     exports.Factory.prototype.traverseSitemap(jsonSitmap[key],factory);
                 } else  {
                     exports.Factory.prototype.traverseSitemap(jsonSitmap[key].linkedPage,factory);
                 }
-            }
+				
+			}
+
         }
     }
 };
