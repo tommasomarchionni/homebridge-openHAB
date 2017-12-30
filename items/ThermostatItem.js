@@ -3,7 +3,7 @@
 var request = require("request");
 const EventEmitter = require("events");
 
-var ThermostatItem = function(widget,platform,homebridge) {
+var ThermostatItem = function (widget, platform, homebridge) {
     //General
     this.temperatureDisplayUnits = homebridge.hap.Characteristic.TemperatureDisplayUnits.CELSIUS;
     this.thermostatItemEmitter = new EventEmitter();
@@ -26,12 +26,12 @@ var ThermostatItem = function(widget,platform,homebridge) {
     this.targetTemperatureInProgress = false;
     this.targetTemperatureTimeout = 1000;
 
-    ThermostatItem.super_.call(this, widget,platform,homebridge);
+    ThermostatItem.super_.call(this, widget, platform, homebridge);
 };
 
-ThermostatItem.prototype.initEmitter = function() {
-    var self=this;
-    this.thermostatItemEmitter.on('TARGET_TEMPERATURE_UPDATE_EVENT', function() {
+ThermostatItem.prototype.initEmitter = function () {
+    var self = this;
+    this.thermostatItemEmitter.on('TARGET_TEMPERATURE_UPDATE_EVENT', function () {
         self.setTargetTemperatureStateFromEmit();
     });
 };
@@ -39,8 +39,8 @@ ThermostatItem.prototype.initEmitter = function() {
 /**
  * Init all thermostat listener
  */
-ThermostatItem.prototype.initListener = function() {
-    if ((typeof this.itemCurrentTemperature) == 'undefined'){
+ThermostatItem.prototype.initListener = function () {
+    if ((typeof this.itemCurrentTemperature) == 'undefined') {
         throw new Error(this.name + " needs CurrentTemperatureItem!");
     }
 
@@ -52,11 +52,11 @@ ThermostatItem.prototype.initListener = function() {
         this.updateCurrentTemperature.bind(this)
     );
 
-    if ((typeof this.itemTargetTemperature) == 'undefined'){
+    if ((typeof this.itemTargetTemperature) == 'undefined') {
         throw new Error(this.name + " needs TargetTemperatureItem!");
     }
 
-    if ((typeof this.itemCurrentRelativeHumidity) !== 'undefined'){
+    if ((typeof this.itemCurrentRelativeHumidity) !== 'undefined') {
         this.listenerCurrentRelativeHumidity = this.listenerFactory(
             this.itemCurrentRelativeHumidity.name,
             this.itemCurrentRelativeHumidity.link,
@@ -71,7 +71,7 @@ ThermostatItem.prototype.initListener = function() {
  * Binding CurrentTemperatureItem in Celsius from ItemFactory
  * @param item
  */
-ThermostatItem.prototype.setCurrentTemperatureCItem = function(item){
+ThermostatItem.prototype.setCurrentTemperatureCItem = function (item) {
     this.itemCurrentTemperature = item;
     this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.CELSIUS;
 };
@@ -80,7 +80,7 @@ ThermostatItem.prototype.setCurrentTemperatureCItem = function(item){
  * Binding CurrentTemperatureItem in Fahrenheit from ItemFactory
  * @param item
  */
-ThermostatItem.prototype.setCurrentTemperatureFItem = function(item){
+ThermostatItem.prototype.setCurrentTemperatureFItem = function (item) {
     this.itemCurrentTemperature = item;
     this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.FAHRENHEIT;
 };
@@ -89,7 +89,7 @@ ThermostatItem.prototype.setCurrentTemperatureFItem = function(item){
  * Binding TargetTemperatureItem in Celsius from ItemFactory
  * @param item
  */
-ThermostatItem.prototype.setTargetTemperatureCItem = function(item){
+ThermostatItem.prototype.setTargetTemperatureCItem = function (item) {
     this.itemTargetTemperature = item;
     this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.CELSIUS;
 };
@@ -98,7 +98,7 @@ ThermostatItem.prototype.setTargetTemperatureCItem = function(item){
  * Binding TargetTemperatureItem in Fahrenheit from ItemFactory
  * @param item
  */
-ThermostatItem.prototype.setTargetTemperatureFItem = function(item){
+ThermostatItem.prototype.setTargetTemperatureFItem = function (item) {
     this.itemTargetTemperature = item;
     this.temperatureDisplayUnits = this.homebridge.hap.Characteristic.TemperatureDisplayUnits.FAHRENHEIT;
 };
@@ -107,7 +107,7 @@ ThermostatItem.prototype.setTargetTemperatureFItem = function(item){
  * Binding CurrentRelativeHumidityItem from ItemFactory
  * @param item
  */
-ThermostatItem.prototype.setCurrentRelativeHumidityItem = function(item){
+ThermostatItem.prototype.setCurrentRelativeHumidityItem = function (item) {
     this.itemCurrentRelativeHumidity = item;
 };
 
@@ -115,7 +115,7 @@ ThermostatItem.prototype.setCurrentRelativeHumidityItem = function(item){
  * Initiialize Others Services needed for ThermostatItem
  * @returns {*}
  */
-ThermostatItem.prototype.getOtherServices = function() {
+ThermostatItem.prototype.getOtherServices = function () {
     var otherService = new this.homebridge.hap.Service.Thermostat();
 
     //Init CurrentTemperature Characteristic
@@ -159,25 +159,25 @@ ThermostatItem.prototype.getOtherServices = function() {
 /**
  * Set target temperature when receive emit
  */
-ThermostatItem.prototype.setTargetTemperatureStateFromEmit = function(){
-    var self=this;
-    if (!this.targetTemperatureInProgress){
+ThermostatItem.prototype.setTargetTemperatureStateFromEmit = function () {
+    var self = this;
+    if (!this.targetTemperatureInProgress) {
         this.targetTemperatureInProgress = true;
-        setTimeout(function() {
-            var value = self.targetTemperatureArr[self.targetTemperatureArr.length-1];
-            self.log("iOS - send message to " + self.itemTargetTemperature.name + " (" + (self.name)+"): " + value);
+        setTimeout(function () {
+            var value = self.targetTemperatureArr[self.targetTemperatureArr.length - 1];
+            self.log("iOS - send message to " + self.itemTargetTemperature.name + " (" + (self.name) + "): " + value);
             var command = "" + value;
             request.post(
                 self.itemTargetTemperature.link,
                 {
                     body: command,
-                    headers: {'Content-Type': 'text/plain'}
+                    headers: { 'Content-Type': 'text/plain' }
                 },
                 function (error, response, body) {
                     if (!error && response.statusCode == 200) {
                         self.log("OpenHAB HTTP - response from " + self.itemTargetTemperature.name + " (" + (self.name)+"): " + body);
                     } else {
-                        self.log("OpenHAB HTTP - error from " + self.itemTargetTemperature.name + " (" + (self.name)+"): " + error);
+                        self.log("OpenHAB HTTP - error from " + self.itemTargetTemperature.name + " (" + (self.name) + "): " + error);
                     }
                     self.targetTemperatureArr = [];
                     self.targetTemperatureInProgress = false;
@@ -192,7 +192,7 @@ ThermostatItem.prototype.setTargetTemperatureStateFromEmit = function(){
  * @param value
  * @param callback
  */
-ThermostatItem.prototype.setTargetTemperatureState = function(value,callback){
+ThermostatItem.prototype.setTargetTemperatureState = function (value, callback) {
     if (this.setTargetTemperatureInitialState) {
         this.setTargetTemperatureInitialState = false;
         callback();
@@ -207,9 +207,9 @@ ThermostatItem.prototype.setTargetTemperatureState = function(value,callback){
  * TODO
  * @param callback
  */
-ThermostatItem.prototype.getTargetHeatingCoolingStateMock = function(callback) {
+ThermostatItem.prototype.getTargetHeatingCoolingStateMock = function (callback) {
     //TODO check se si può anche scrivere
-    callback(undefined,1);
+    callback(undefined, 1);
 };
 
 /**
@@ -217,7 +217,7 @@ ThermostatItem.prototype.getTargetHeatingCoolingStateMock = function(callback) {
  * @param value
  * @param callback
  */
-ThermostatItem.prototype.setTargetHeatingCoolingStateMock = function(value,callback){
+ThermostatItem.prototype.setTargetHeatingCoolingStateMock = function (value, callback) {
     callback();
 };
 
@@ -225,19 +225,19 @@ ThermostatItem.prototype.setTargetHeatingCoolingStateMock = function(value,callb
  * Get display unit from temperatureDisplayUnits
  * @param callback
  */
-ThermostatItem.prototype.getTemperatureDisplayUnits = function(callback) {
-    callback(undefined,this.temperatureDisplayUnits);
+ThermostatItem.prototype.getTemperatureDisplayUnits = function (callback) {
+    callback(undefined, this.temperatureDisplayUnits);
 };
 
 /**
  * TODO
  * @param callback
  */
-ThermostatItem.prototype.getCurrentHeatingCoolingStateMock = function(callback) {
+ThermostatItem.prototype.getCurrentHeatingCoolingStateMock = function (callback) {
     //Characteristic.CurrentHeatingCoolingState.OFF = 0;
     //Characteristic.CurrentHeatingCoolingState.HEAT = 1;
     //Characteristic.CurrentHeatingCoolingState.COOL = 2;
-    callback(undefined,this.homebridge.hap.Characteristic.CurrentHeatingCoolingState.HEAT);
+    callback(undefined, this.homebridge.hap.Characteristic.CurrentHeatingCoolingState.HEAT);
 };
 
 /**
@@ -245,8 +245,8 @@ ThermostatItem.prototype.getCurrentHeatingCoolingStateMock = function(callback) 
  * @param state
  * @returns {number}
  */
-ThermostatItem.prototype.checkTemperatureState = function(state) {
-    if ('Unitialized' === state){
+ThermostatItem.prototype.checkTemperatureState = function (state) {
+    if ('Unitialized' === state) {
         return 0.0;
     }
     return +state;
@@ -257,8 +257,8 @@ ThermostatItem.prototype.checkTemperatureState = function(state) {
  * @param state
  * @returns {number}
  */
-ThermostatItem.prototype.checkRelativeHumidityState = function(state) {
-    if ('Unitialized' === state){
+ThermostatItem.prototype.checkRelativeHumidityState = function (state) {
+    if ('Unitialized' === state) {
         return 0;
     }
     return +state;
@@ -268,7 +268,7 @@ ThermostatItem.prototype.checkRelativeHumidityState = function(state) {
  * Set CurrentTemperature from OpenHAB
  * @param message
  */
-ThermostatItem.prototype.updateCurrentTemperature = function(message) {
+ThermostatItem.prototype.updateCurrentTemperature = function (message) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CurrentTemperature)
         .setValue(this.checkTemperatureState(message));
@@ -278,7 +278,7 @@ ThermostatItem.prototype.updateCurrentTemperature = function(message) {
  * Set CurrentRelativeHumidity from OpenHAB
  * @param message
  */
-ThermostatItem.prototype.updateCurrentRelativeHumidity = function(message) {
+ThermostatItem.prototype.updateCurrentRelativeHumidity = function (message) {
     this.otherService
         .getCharacteristic(this.homebridge.hap.Characteristic.CurrentRelativeHumidity)
         .setValue(this.checkRelativeHumidityState(message));
@@ -288,15 +288,15 @@ ThermostatItem.prototype.updateCurrentRelativeHumidity = function(message) {
  * Get CurrentRelativeHumidity requested from iOS
  * @param callback
  */
-ThermostatItem.prototype.getCurrentRelativeHumidityState = function(callback) {
+ThermostatItem.prototype.getCurrentRelativeHumidityState = function (callback) {
     var self = this;
-    this.log("iOS - request Current relative humidity state from " + this.itemCurrentRelativeHumidity.name + " (" + (self.name)+")");
+    this.log("iOS - request Current relative humidity state from " + this.itemCurrentRelativeHumidity.name + " (" + (self.name) + ")");
     request(self.itemCurrentRelativeHumidity.link + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            self.log("OpenHAB HTTP - response from " + self.itemCurrentRelativeHumidity.name + " (" + (self.name)+"): " + body);
-            callback(undefined,self.checkRelativeHumidityState(body));
+            self.log("OpenHAB HTTP - response from " + self.itemCurrentRelativeHumidity.name + " (" + (self.name) + "): " + body);
+            callback(undefined, self.checkRelativeHumidityState(body));
         } else {
-            self.log("OpenHAB HTTP - error from " + self.itemCurrentRelativeHumidity.name + " (" + (self.name)+"): " + error);
+            self.log("OpenHAB HTTP - error from " + self.itemCurrentRelativeHumidity.name + " (" + (self.name) + "): " + error);
         }
     })
 };
@@ -305,15 +305,15 @@ ThermostatItem.prototype.getCurrentRelativeHumidityState = function(callback) {
  * Get CurrentTemperature requested from iOS
  * @param callback
  */
-ThermostatItem.prototype.getCurrentTemperatureState = function(callback) {
+ThermostatItem.prototype.getCurrentTemperatureState = function (callback) {
     var self = this;
-    this.log("iOS - request current temperature state from " + this.itemCurrentTemperature.name + " (" + (self.name)+")");
+    this.log("iOS - request current temperature state from " + this.itemCurrentTemperature.name + " (" + (self.name) + ")");
     request(self.itemCurrentTemperature.link + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            self.log("OpenHAB HTTP - response from " + self.itemCurrentTemperature.name + " (" + (self.name)+"): " + body);
-            callback(undefined,self.checkTemperatureState(body));
+            self.log("OpenHAB HTTP - response from " + self.itemCurrentTemperature.name + " (" + (self.name) + "): " + body);
+            callback(undefined, self.checkTemperatureState(body));
         } else {
-            self.log("OpenHAB HTTP - error from " + self.itemCurrentTemperature.name + " (" + (self.name)+"): " + error);
+            self.log("OpenHAB HTTP - error from " + self.itemCurrentTemperature.name + " (" + (self.name) + "): " + error);
         }
     })
 };
@@ -322,15 +322,15 @@ ThermostatItem.prototype.getCurrentTemperatureState = function(callback) {
  * Get TargetTemperature requested from iOS
  * @param callback
  */
-ThermostatItem.prototype.getTargetTemperatureState = function(callback) {
+ThermostatItem.prototype.getTargetTemperatureState = function (callback) {
     var self = this;
-    this.log("iOS - request target temperature state from " + this.itemTargetTemperature.name + " (" + (self.name)+")");
+    this.log("iOS - request target temperature state from " + this.itemTargetTemperature.name + " (" + (self.name) + ")");
     request(self.itemTargetTemperature.link + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            self.log("OpenHAB HTTP - response from " + self.itemTargetTemperature.name + " (" + (self.name)+"): " + body);
-            callback(undefined,self.checkTemperatureState(body));
+            self.log("OpenHAB HTTP - response from " + self.itemTargetTemperature.name + " (" + (self.name) + "): " + body);
+            callback(undefined, self.checkTemperatureState(body));
         } else {
-            self.log("OpenHAB HTTP - error from " + self.itemTargetTemperature.name + " (" + (self.name)+"): " + error);
+            self.log("OpenHAB HTTP - error from " + self.itemTargetTemperature.name + " (" + (self.name) + "): " + error);
         }
     })
 };

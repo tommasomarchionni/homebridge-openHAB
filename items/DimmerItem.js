@@ -18,12 +18,12 @@ DimmerItem.prototype.getServices = function () {
     this.otherService.getCharacteristic(this.homebridge.hap.Characteristic.On)
         .on('set', this.setOpenHabPowerState.bind(this))
         .on('get', this.getOpenHabPowerState.bind(this))
-        .setValue(this.state > 0, function () {}, "init");
+        .setValue(this.state > 0, function () { }, "init");
 
     this.otherService.addCharacteristic(this.homebridge.hap.Characteristic.Brightness)
         .on('set', this.setOpenHabBrightnessState.bind(this))
         .on('get', this.getOpenHabBrightnessState.bind(this))
-        .setValue(+this.state, function () {}, "init");
+        .setValue(+this.state, function () { }, "init");
 
     return [this.informationService, this.otherService];
 };
@@ -63,7 +63,7 @@ DimmerItem.prototype.updateOpenHabState = function (value, type, callback, conte
         this.url,
         {
             body: command,
-            headers: {'Content-Type': 'text/plain'}
+            headers: { 'Content-Type': 'text/plain' }
         },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -85,21 +85,21 @@ DimmerItem.prototype.getOpenHabState = function () {
 
     return new Promise(function (resolve, reject) {
 
-            request.get(
-                this.url + '/state',
-                function (error, response, body) {
-                    if (!error && response.statusCode === 200) {
+        request.get(
+            this.url + '/state',
+            function (error, response, body) {
+                if (!error && response.statusCode === 200) {
 
-                        this.log("OpenHAB HTTP GET <" + this.name + "> - " + body);
-                        resolve(body);
+                    this.log("OpenHAB HTTP GET <" + this.name + "> - " + body);
+                    resolve(body);
 
-                    } else {
-                        this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
-                        reject(error);
-                    }
-                }.bind(this)
-            )
-        }.bind(this)
+                } else {
+                    this.log.error("OpenHAB HTTP ERROR <" + this.name + "> - " + error);
+                    reject(error);
+                }
+            }.bind(this)
+        )
+    }.bind(this)
     );
 };
 
@@ -108,7 +108,7 @@ DimmerItem.prototype.getOpenHabPowerState = function (callback) {
         .then(function (state) {
             let response = false;
 
-            if (state > 0) {response = true; }
+            if (state > 0) { response = true; }
             callback(null, response)
         });
 };
@@ -122,9 +122,9 @@ DimmerItem.prototype.getOpenHabBrightnessState = function (callback) {
 
 DimmerItem.prototype.setOpenHabPowerState = function (value, callback, context) {
 
-    if(value == false){
+    if (value == false) {
         this.updateOpenHabState(value, "Power", callback, context);
-    }else {
+    } else {
         callback();
     }
 

@@ -2,15 +2,15 @@
 
 var request = require("request");
 
-var RollershutterItem = function(widget,platform,homebridge) {
-    RollershutterItem.super_.call(this, widget,platform,homebridge);
+var RollershutterItem = function (widget, platform, homebridge) {
+    RollershutterItem.super_.call(this, widget, platform, homebridge);
     this.positionState = this.homebridge.hap.Characteristic.PositionState.STOPPED;
     this.currentPosition = 100;
     this.targetPosition = 100;
     this.startedPosition = 100;
 };
 
-RollershutterItem.prototype.getServices = function() {
+RollershutterItem.prototype.getServices = function () {
 
     this.initListener();
 
@@ -36,12 +36,12 @@ RollershutterItem.prototype.getServices = function() {
     return [this.informationService, this.otherService];
 };
 
-RollershutterItem.prototype.updateCharacteristics = function(message) {
+RollershutterItem.prototype.updateCharacteristics = function (message) {
 
     if (parseInt(message) == this.targetPosition) {
         var ps = this.homebridge.hap.Characteristic.PositionState.STOPPED;
         var cs = parseInt(message);
-    } else if (parseInt(message) > this.targetPosition){
+    } else if (parseInt(message) > this.targetPosition) {
         var ps = this.homebridge.hap.Characteristic.PositionState.INCREASING;
         var cs = this.startedPosition;
     } else {
@@ -59,7 +59,7 @@ RollershutterItem.prototype.updateCharacteristics = function(message) {
     this.currentPosition = parseInt(cs);
 };
 
-RollershutterItem.prototype.setItem = function(value, callback) {
+RollershutterItem.prototype.setItem = function (value, callback) {
 
     var self = this;
 
@@ -83,7 +83,7 @@ RollershutterItem.prototype.setItem = function(value, callback) {
         this.url,
         {
             body: command,
-            headers: {'Content-Type': 'text/plain'}
+            headers: { 'Content-Type': 'text/plain' }
         },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -97,28 +97,28 @@ RollershutterItem.prototype.setItem = function(value, callback) {
     );
 };
 
-RollershutterItem.prototype.getItemPositionState = function(callback) {
+RollershutterItem.prototype.getItemPositionState = function (callback) {
     this.log("iOS - request position state from " + this.name);
     this.log("Platform - response from " + this.name + ": " + this.positionState);
-    callback(undefined,this.positionState);
+    callback(undefined, this.positionState);
 };
 
-RollershutterItem.prototype.getItemTargetPosition = function(callback) {
+RollershutterItem.prototype.getItemTargetPosition = function (callback) {
     this.log("iOS - get target position state from " + this.name);
     this.log("Platform - response from " + this.name + ": " + this.targetPosition);
-    callback(undefined,this.targetPosition);
+    callback(undefined, this.targetPosition);
 };
 
-RollershutterItem.prototype.getItemCurrentPosition = function(callback) {
+RollershutterItem.prototype.getItemCurrentPosition = function (callback) {
     var self = this;
     this.log("iOS - request current position state from " + this.name);
 
     request(this.url + '/state?type=json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
 
-            self.log("OpenHAB HTTP - response from " + self.name + ": " +body);
+            self.log("OpenHAB HTTP - response from " + self.name + ": " + body);
             self.currentPosition = parseInt(body);
-            callback(undefined,parseInt(body));
+            callback(undefined, parseInt(body));
 
         } else {
             self.log("OpenHAB HTTP - error from " + self.name + ": " + error);
